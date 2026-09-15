@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Inventário ECOLAB</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root{
+  --bg:#0A121D;
+  --panel:#101E2E;
+  --panel-2:#152840;
+  --line: rgba(173, 197, 219, 0.11);
+  --line-strong: rgba(173, 197, 219, 0.24);
+  --ink:#E9EEF3;
+  --ink-dim:#93A8BC;
+  --ink-faint:#5A7086;
+  --copper:#F2A93C;
+  --copper-dim:#8C6A32;
+  --rust:#E2604B;
+  --rust-dim:#7A3324;
+  --ok:#5FC28A;
+  --info:#6FB3E0;
+  --radius: 5px;
+}
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; }
+body{
+  background:
+    repeating-linear-gradient(0deg, rgba(173,197,219,0.025) 0px, rgba(173,197,219,0.025) 1px, transparent 1px, transparent 34px),
+    repeating-linear-gradient(90deg, rgba(173,197,219,0.025) 0px, rgba(173,197,219,0.025) 1px, transparent 1px, transparent 34px),
+    radial-gradient(1200px 600px at 12% -10%, rgba(242,169,60,0.07), transparent 60%),
+    var(--bg);
+  color:var(--ink);
+  font-family:'Space Grotesk', -apple-system, sans-serif;
+  min-height:100vh;
+}
+.mono{ font-family:'JetBrains Mono', ui-monospace, monospace; }
+
+/* ---------- layout ---------- */
+.app{ max-width:1360px; margin:0 auto; padding:28px 24px 80px; }
+
+.topbar{
+  display:flex; justify-content:space-between; align-items:flex-end;
+  border-bottom:1px solid var(--line-strong);
+  padding-bottom:18px; margin-bottom:22px; gap:20px; flex-wrap:wrap;
+}
+.topbar-actions{ display:flex; align-items:center; gap:10px; }
+.ghostbtn{
+  background:none; border:1px solid var(--line-strong); color:var(--ink-dim); cursor:pointer;
+  font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px;
+  padding:10px 14px; border-radius:var(--radius); transition:all .12s ease;
+}
+.ghostbtn:hover{ color:var(--ink); border-color:var(--ink-faint); background:var(--panel-2); }
+
+.storage-warning{
+  display:none; align-items:center; gap:8px; background:rgba(226,96,75,0.1);
+  border:1px solid var(--rust-dim); color:#F2C4BA; font-size:12.5px; line-height:1.5;
+  padding:10px 14px; border-radius:var(--radius); margin-bottom:18px;
+}
+.storage-warning.show{ display:flex; }
+.topbar h1{
+  font-size:29px; font-weight:700; margin:0 0 6px; letter-spacing:-0.015em;
+  display:flex; align-items:center; gap:12px;
+}
+.topbar h1 .bar{
+  width:5px; height:26px; background:var(--copper); border-radius:2px; flex:none;
+  box-shadow:0 0 14px rgba(242,169,60,0.55);
+}
+.topbar .sub{ color:var(--ink-dim); font-size:13.5px; }
+.topbar .sub .mono{ color:var(--copper); }
+
+.addbtn{
+  background:var(--copper); color:#1A130A; border:none; cursor:pointer;
+  font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14px;
+  padding:11px 18px; border-radius:var(--radius);
+  box-shadow:0 0 0 1px rgba(242,169,60,0.3), 0 6px 20px rgba(242,169,60,0.18);
+  transition:transform .12s ease, background .12s ease, box-shadow .12s ease;
+}
+.addbtn:hover{ background:#F7BC63; transform:translateY(-1px); box-shadow:0 0 0 1px rgba(242,169,60,0.45), 0 8px 24px rgba(242,169,60,0.28); }
+.addbtn:active{ transform:translateY(0); }
+
+/* stat strip */
+.stats{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+  background:var(--line); border:1px solid var(--line-strong); border-radius:6px;
+  overflow:hidden; margin:0 0 34px; position:relative;
+}
+.stats::before, .stats::after{
+  content:''; position:absolute; width:14px; height:14px; border-color:var(--copper); border-style:solid; z-index:2;
+}
+.stats::before{ top:-7px; left:-7px; border-width:2px 0 0 2px; }
+.stats::after{ bottom:-7px; right:-7px; border-width:0 2px 2px 0; }
+.stat{ background:var(--panel); padding:16px 18px; border-top:2px solid var(--line-strong); }
+.stat:nth-child(1){ border-top-color:var(--copper); }
+.stat:nth-child(2){ border-top-color:var(--info); }
+.stat:nth-child(3){ border-top-color:var(--ok); }
+.stat:nth-child(4){ border-top-color:var(--rust); }
+.stat .n{ font-family:'JetBrains Mono',monospace; font-size:27px; font-weight:600; color:var(--ink); line-height:1.1; font-variant-numeric:tabular-nums; }
+.stat:nth-child(1) .n{ color:var(--copper); text-shadow:0 0 18px rgba(242,169,60,0.3); }
+.stat:nth-child(2) .n{ color:var(--info); }
+.stat:nth-child(3) .n{ color:var(--ok); }
+.stat:nth-child(4) .n{ color:var(--rust); }
+.stat .l{ font-size:12px; color:var(--ink-dim); margin-top:5px; }
+
+/* main grid */
+.main{ display:grid; grid-template-columns:230px 1fr; gap:24px; align-items:start; }
+@media (max-width:860px){ .main{ grid-template-columns:1fr; } }
+
+/* sidebar */
+.side{ position:sticky; top:20px; }
+.searchbox{
+  width:100%; background:var(--panel); border:1px solid var(--line-strong);
+  color:var(--ink); padding:10px 12px; border-radius:var(--radius);
+  font-family:'Space Grotesk',sans-serif; font-size:13.5px; margin-bottom:18px;
+}
+.searchbox::placeholder{ color:var(--ink-faint); }
+.searchbox:focus{ outline:none; border-color:var(--copper-dim); }
+
+.filtergroup{ margin-bottom:20px; }
+.filtergroup h3{
+  font-size:11px; text-transform:uppercase; letter-spacing:0.08em;
+  color:var(--ink-faint); font-weight:600; margin:0 0 8px;
+}
+.chip{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:7px 12px; border-radius:999px; cursor:pointer;
+  font-size:13px; color:var(--ink-dim); margin-bottom:5px;
+  border:1px solid transparent; transition:background .12s ease, border-color .12s ease, color .12s ease;
+}
+.chip:hover{ background:var(--panel-2); color:var(--ink); border-color:var(--line-strong); }
+.chip.active{ background:rgba(242,169,60,0.12); color:var(--copper); border-color:var(--copper-dim); box-shadow:0 0 0 1px rgba(242,169,60,0.12) inset; }
+.chip .count{ font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--ink-faint); }
+.chip.active .count{ color:var(--copper); }
+
+.clearbtn{
+  background:none; border:1px solid var(--line-strong); color:var(--ink-dim);
+  font-size:12px; padding:6px 10px; border-radius:var(--radius); cursor:pointer; width:100%;
+  font-family:'Space Grotesk',sans-serif; margin-top:4px;
+}
+.clearbtn:hover{ color:var(--ink); border-color:var(--ink-faint); }
+
+/* content */
+.content-header{
+  display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;
+}
+.content-header .count-line{ font-size:12.5px; color:var(--ink-faint); }
+.viewtoggle{ display:flex; gap:2px; background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+.viewtoggle button{
+  background:none; border:none; color:var(--ink-faint); font-size:12px; padding:6px 12px; cursor:pointer;
+  font-family:'Space Grotesk',sans-serif;
+}
+.viewtoggle button.active{ background:var(--panel-2); color:var(--copper); }
+
+.category-block{ margin-bottom:8px; }
+.category-head{
+  display:flex; align-items:center; gap:10px; padding:10px 12px;
+  cursor:pointer; user-select:none; border-bottom:1px solid var(--line);
+  border-left:3px solid var(--copper-dim); border-radius:0 4px 4px 0;
+  background:var(--panel); transition:border-color .15s ease, background .15s ease;
+}
+.category-head:hover{ border-left-color:var(--copper); background:var(--panel-2); }
+.category-head .tri{ color:var(--copper-dim); font-size:10px; width:10px; transition:transform .15s ease; }
+.category-head.open .tri{ transform:rotate(90deg); }
+.category-head .name{ font-weight:600; font-size:14.5px; }
+.category-head .n{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-faint); }
+
+.rows{ overflow:hidden; }
+.row{
+  display:grid; grid-template-columns:1fr 100px 140px 150px 32px;
+  gap:10px; align-items:center; padding:9px 4px 9px 20px;
+  border-bottom:1px solid var(--line); border-left:3px solid transparent; font-size:13.5px;
+  transition:background .12s ease, border-color .12s ease;
+}
+.row:hover{ background:rgba(242,169,60,0.045); }
+.row:has(.setor.unassigned){ border-left-color:var(--rust-dim); }
+.row .name{ color:var(--ink); }
+.row .name{ display:flex; align-items:center; gap:8px; }
+.row .name .label{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.row .name .marca{ color:var(--ink-faint); font-size:11.5px; margin-left:2px; }
+.thumb{ width:26px; height:26px; border-radius:3px; object-fit:cover; flex:none; border:1px solid var(--line-strong); }
+.thumb.placeholder{ background:var(--panel-2); border:1px dashed var(--line); }
+input[type=file]{ color:var(--ink-dim); font-size:12.5px; width:100%; }
+input[type=file]::file-selector-button{
+  background:var(--panel-2); color:var(--ink); border:1px solid var(--line-strong); border-radius:var(--radius);
+  padding:6px 10px; margin-right:8px; cursor:pointer; font-family:'Space Grotesk',sans-serif; font-size:12px;
+}
+.photo-preview{ display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.photo-preview img{ width:56px; height:56px; object-fit:cover; border-radius:3px; border:1px solid var(--line-strong); }
+.dup-hint{
+  background: rgba(214,161,91,0.08); border:1px solid var(--copper-dim); border-radius:var(--radius);
+  padding:10px 12px; font-size:12.5px; color:var(--ink-dim); margin-top:8px; line-height:1.5;
+}
+.dup-hint.muted{ background:rgba(159,179,163,0.06); border-color:var(--line-strong); }
+.dup-hint .linklike{
+  background:none; border:none; color:var(--copper); text-decoration:underline; cursor:pointer;
+  font-size:12.5px; padding:0; margin-left:4px; font-family:'Space Grotesk',sans-serif;
+}
+.dup-actions{ display:flex; gap:6px; margin:10px 0 8px; }
+.dup-action-btn{
+  flex:1; background:var(--panel); border:1px solid var(--line-strong); color:var(--ink-dim);
+  font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:12px; padding:7px 6px; border-radius:var(--radius);
+  cursor:pointer; transition:all .12s ease;
+}
+.dup-action-btn:hover{ border-color:var(--ink-faint); color:var(--ink); }
+.dup-action-btn.active{ background:rgba(242,169,60,0.15); border-color:var(--copper); color:var(--copper); }
+.dup-action-btn.danger-mode.active{ background:rgba(226,96,75,0.15); border-color:var(--rust); color:var(--rust); }
+.dup-action-btn.move-mode.active{ background:rgba(111,179,224,0.15); border-color:var(--info); color:var(--info); }
+.row .qty{ font-family:'JetBrains Mono',monospace; color:var(--copper); }
+.row .setor{ font-size:12.5px; color:var(--ink-dim); }
+.row .setor.unassigned{ color:var(--rust); opacity:.8; }
+.row .obs{ font-size:12px; color:var(--ink-faint); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.row .menu-btn{
+  background:none; border:none; color:var(--ink-faint); cursor:pointer; font-size:16px;
+  width:28px; height:28px; border-radius:var(--radius); text-align:center;
+}
+.row .menu-btn:hover{ background:var(--panel-2); color:var(--ink); }
+
+.rowhead{
+  display:grid; grid-template-columns:1fr 100px 140px 150px 32px; gap:10px;
+  padding:0 4px 6px 20px; font-size:10.5px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em;
+}
+.rowhead .th-item{ padding-left:34px; }
+
+.empty{
+  text-align:center; padding:60px 20px; color:var(--ink-faint); border:1px dashed var(--line-strong); border-radius:var(--radius);
+}
+.empty .big{ font-size:15px; color:var(--ink-dim); margin-bottom:6px; }
+
+/* activity log */
+.log{ margin-top:36px; }
+.log h3{ font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-faint); margin:0 0 10px; }
+.logline{
+  display:flex; gap:10px; font-size:12.5px; color:var(--ink-dim); padding:6px 0;
+  border-bottom:1px solid var(--line);
+}
+.logline .t{ color:var(--ink-faint); font-family:'JetBrains Mono',monospace; font-size:11px; white-space:nowrap; }
+.logline .tag{
+  font-family:'JetBrains Mono',monospace; font-size:10.5px; padding:1px 6px; border-radius:2px;
+  height:fit-content;
+}
+.tag.add{ background:rgba(127,166,135,0.15); color:var(--ok); }
+.tag.remove{ background:rgba(193,87,59,0.15); color:var(--rust); }
+.tag.move{ background:rgba(214,161,91,0.15); color:var(--copper); }
+.tag.edit{ background:rgba(159,179,163,0.15); color:var(--ink-dim); }
+
+/* ---------- drawer / modal ---------- */
+.overlay{
+  position:fixed; inset:0; background:rgba(8,15,11,0.6); backdrop-filter:blur(2px);
+  display:none; align-items:stretch; justify-content:flex-end; z-index:50;
+}
+.overlay.show{ display:flex; }
+.drawer{
+  width:400px; max-width:92vw; background:var(--panel); border-left:1px solid var(--line-strong);
+  padding:24px; overflow-y:auto; animation:slidein .18s ease;
+  box-shadow:-16px 0 44px rgba(0,0,0,0.45); position:relative;
+}
+.drawer::before{ content:''; position:absolute; top:0; left:0; width:3px; height:100%; background:var(--copper); }
+@keyframes slidein{ from{ transform:translateX(20px); opacity:0; } to{ transform:translateX(0); opacity:1; } }
+.drawer h2{ font-size:17px; margin:0 0 3px; }
+.drawer .drawer-sub{ font-size:12px; color:var(--ink-faint); margin-bottom:20px; font-family:'JetBrains Mono',monospace; }
+
+.field{ margin-bottom:14px; }
+.field label{ display:block; font-size:11.5px; color:var(--ink-dim); margin-bottom:5px; text-transform:uppercase; letter-spacing:.05em; }
+.field input, .field select, .field textarea{
+  width:100%; background:var(--bg); border:1px solid var(--line-strong); color:var(--ink);
+  padding:9px 10px; border-radius:var(--radius); font-family:'Space Grotesk',sans-serif; font-size:13.5px;
+}
+.field input.mono, .field select.mono{ font-family:'JetBrains Mono',monospace; }
+.field input:focus, .field select:focus, .field textarea:focus{ outline:none; border-color:var(--copper-dim); }
+.field input:disabled{ opacity:.65; cursor:not-allowed; background:var(--panel-2); color:var(--ink-dim); }
+.field label .mirror-tag{ text-transform:none; letter-spacing:0; color:var(--copper); font-size:10.5px; margin-left:4px; }
+.field textarea{ resize:vertical; min-height:56px; font-family:'Space Grotesk',sans-serif; }
+.field-row{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.field .hint{ font-size:11px; color:var(--ink-faint); margin-top:4px; }
+
+.drawer-actions{ display:flex; gap:8px; margin-top:22px; }
+.btn{
+  flex:1; padding:10px; border-radius:var(--radius); border:none; cursor:pointer;
+  font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13.5px;
+}
+.btn.primary{ background:var(--copper); color:#1A130A; }
+.btn.primary:hover{ background:#E3B06E; }
+.btn.ghost{ background:none; border:1px solid var(--line-strong); color:var(--ink-dim); }
+.btn.ghost:hover{ color:var(--ink); border-color:var(--ink-faint); }
+.btn.danger{ background:none; border:1px solid var(--rust-dim); color:var(--rust); }
+.btn.danger:hover{ background:rgba(193,87,59,0.1); }
+
+.rowmenu{
+  position:absolute; background:var(--panel-2); border:1px solid var(--line-strong); border-radius:var(--radius);
+  z-index:60; min-width:140px; box-shadow:0 8px 24px rgba(0,0,0,0.4);
+}
+.rowmenu button{
+  display:block; width:100%; text-align:left; background:none; border:none; color:var(--ink);
+  padding:9px 12px; font-size:13px; cursor:pointer; font-family:'Space Grotesk',sans-serif;
+}
+.rowmenu button:hover{ background:rgba(214,161,91,0.08); }
+.rowmenu button.danger{ color:var(--rust); }
+
+.toast{
+  position:fixed; bottom:22px; left:50%; transform:translateX(-50%);
+  background:var(--panel-2); border:1px solid var(--line-strong); color:var(--ink);
+  padding:10px 18px; border-radius:var(--radius); font-size:13px; z-index:80;
+  opacity:0; pointer-events:none; transition:opacity .2s ease, transform .2s ease;
+}
+.toast.show{ opacity:1; transform:translateX(-50%) translateY(-4px); }
+
+::-webkit-scrollbar{ width:9px; }
+::-webkit-scrollbar-thumb{ background:var(--line-strong); border-radius:6px; }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div id="storageWarning" class="storage-warning">
+    <span>⚠ Salvamento automático indisponível neste navegador — suas alterações não serão mantidas ao atualizar a página. Exporte um backup antes de sair e importe para recuperar depois.</span>
+  </div>
+
+  <div class="topbar">
+    <div>
+      <h1><span class="bar"></span>Inventário — ECOLAB</h1>
+      <div class="sub">controle de equipamentos • <span class="mono" id="lastSync">carregando…</span></div>
+    </div>
+    <div class="topbar-actions">
+      <button class="ghostbtn" onclick="triggerImport()">Importar backup</button>
+      <button class="ghostbtn" onclick="exportBackup()">Exportar backup</button>
+      <button class="addbtn" onclick="openDrawer()">+ Adicionar item</button>
+    </div>
+  </div>
+  <input type="file" id="importFile" accept="application/json" style="display:none" onchange="handleImportFile(event)">
+
+  <div class="stats" id="stats"></div>
+
+  <div class="main">
+    <div class="side">
+      <input class="searchbox" id="search" placeholder="Buscar item ou marca…" oninput="render()">
+
+      <div class="filtergroup">
+        <h3>Categoria</h3>
+        <div id="catFilters"></div>
+      </div>
+
+      <div class="filtergroup">
+        <h3>Localização</h3>
+        <div id="setorFilters"></div>
+      </div>
+
+      <button class="clearbtn" onclick="clearFilters()">Limpar filtros</button>
+    </div>
+
+    <div>
+      <div class="content-header">
+        <div class="count-line" id="countLine"></div>
+        <div class="viewtoggle">
+          <button id="btnExpandAll" onclick="setAllOpen(true)">expandir</button>
+          <button id="btnCollapseAll" onclick="setAllOpen(false)">recolher</button>
+        </div>
+      </div>
+      <div id="listArea"></div>
+
+      <div class="log">
+        <h3>Atividade recente</h3>
+        <div id="logArea"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeDrawer()">
+  <div class="drawer" id="drawer"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'inventario-lab-v1';
+const SEED_ITEMS = [{"id": "item-001", "item": "Raspberry pi 3 model B", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Placas & SBCs", "setor": "Não atribuído", "marca": "Raspberry Pi", "observacoes": ""}, {"id": "item-002", "item": "Raspberry pi 4 model B", "quantidade": 3, "quantidadeLabel": "3", "categoria": "Placas & SBCs", "setor": "Não atribuído", "marca": "Raspberry Pi", "observacoes": ""}, {"id": "item-003", "item": "Raspberry pi 5", "quantidade": 4, "quantidadeLabel": "4", "categoria": "Placas & SBCs", "setor": "Não atribuído", "marca": "Raspberry Pi", "observacoes": ""}, {"id": "item-004", "item": "Crachás NVIDIA", "quantidade": 0, "quantidadeLabel": "MUITOS", "categoria": "Outros & Diversos", "setor": "Não atribuído", "marca": "Nvidia", "observacoes": ""}, {"id": "item-005", "item": "Jetson Orin Nano", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Placas & SBCs", "setor": "Não atribuído", "marca": "Jetson", "observacoes": ""}, {"id": "item-006", "item": "RTX 5070 TI", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Outros & Diversos", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-007", "item": "CAIXA RED-SUS", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Outros & Diversos", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-008", "item": "Memoria RAM XPG Lancer Blade DDR5 32 gb", "quantidade": 2, "quantidadeLabel": "2", "categoria": "Outros & Diversos", "setor": "Não atribuído", "marca": "XPG", "observacoes": ""}, {"id": "item-009", "item": "Pasta Termica Z3", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Ferramentas & Consumíveis", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-010", "item": "Cabo VGA", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Cabos & Conectores", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-011", "item": "Fonte 5V", "quantidade": 4, "quantidadeLabel": "4", "categoria": "Energia & Baterias", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-012", "item": "Cabo USB - VGA", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Cabos & Conectores", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-013", "item": "Plugue Femea", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Cabos & Conectores", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-014", "item": "Cabo de Rede", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Cabos & Conectores", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-015", "item": "Extensor USB", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Cabos & Conectores", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-016", "item": "FONTE XPG 1000W", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Energia & Baterias", "setor": "Não atribuído", "marca": "XPG", "observacoes": ""}, {"id": "item-017", "item": "Camera Wirelles", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Câmeras & Sensores", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-018", "item": "ROVER", "quantidade": 5, "quantidadeLabel": "5", "categoria": "Motores & Atuadores", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-019", "item": "Jetson Nano 2gb", "quantidade": 7, "quantidadeLabel": "7", "categoria": "Placas & SBCs", "setor": "Não atribuído", "marca": "Jetson", "observacoes": ""}, {"id": "item-020", "item": "Fonte 5v bico fino", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Energia & Baterias", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-021", "item": "Estação de solda HIKARI HK-930", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Ferramentas & Consumíveis", "setor": "Não atribuído", "marca": "Hikari", "observacoes": ""}, {"id": "item-022", "item": "FRDM-KG4F-DEV", "quantidade": 3, "quantidadeLabel": "3", "categoria": "Placas & SBCs", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-023", "item": "XL 1276-POI", "quantidade": 2, "quantidadeLabel": "2", "categoria": "Comunicação & RF", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-024", "item": "CONVERSOR DC-DC", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Energia & Baterias", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-025", "item": "STM 32F411", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Placas & SBCs", "setor": "Não atribuído", "marca": "Stm", "observacoes": ""}, {"id": "item-026", "item": "MONOCRYSTALINE SOLAR", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Energia & Baterias", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-027", "item": "HW-851 DC-DC", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Energia & Baterias", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-028", "item": "BATERIA LP103454", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Energia & Baterias", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-029", "item": "BATERIA LB2200LP3", "quantidade": 2, "quantidadeLabel": "2", "categoria": "Energia & Baterias", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-030", "item": "ARDUINO NANO", "quantidade": 2, "quantidadeLabel": "2", "categoria": "Placas & SBCs", "setor": "Não atribuído", "marca": "Arduino", "observacoes": ""}, {"id": "item-031", "item": "HW-519 R4", "quantidade": 5, "quantidadeLabel": "5", "categoria": "Outros & Diversos", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-032", "item": "ARDUINO UNO", "quantidade": 2, "quantidadeLabel": "2", "categoria": "Placas & SBCs", "setor": "Não atribuído", "marca": "Arduino", "observacoes": ""}, {"id": "item-033", "item": "ARDUINO MEGA", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Placas & SBCs", "setor": "Não atribuído", "marca": "Arduino", "observacoes": ""}, {"id": "item-034", "item": "SHIELD RS485", "quantidade": 2, "quantidadeLabel": "2", "categoria": "Outros & Diversos", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-035", "item": "ARDUINO NANO 33 SENSE", "quantidade": 14, "quantidadeLabel": "14", "categoria": "Placas & SBCs", "setor": "Não atribuído", "marca": "Arduino", "observacoes": ""}, {"id": "item-036", "item": "ST LINK V2", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Outros & Diversos", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-037", "item": "BATERIA CR202E 3V", "quantidade": 16, "quantidadeLabel": "16", "categoria": "Energia & Baterias", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-038", "item": "BATERIA CR1220 3V", "quantidade": 3, "quantidadeLabel": "3", "categoria": "Energia & Baterias", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-039", "item": "SSD CARD SANDISK 256GB", "quantidade": 2, "quantidadeLabel": "2", "categoria": "Armazenamento", "setor": "Não atribuído", "marca": "Sandisk", "observacoes": ""}, {"id": "item-040", "item": "SSD CARD SANDISK 64GB", "quantidade": 2, "quantidadeLabel": "2", "categoria": "Armazenamento", "setor": "Não atribuído", "marca": "Sandisk", "observacoes": ""}, {"id": "item-041", "item": "SSD CARD SANDISK ULTRA 128GB", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Armazenamento", "setor": "Não atribuído", "marca": "Sandisk", "observacoes": ""}, {"id": "item-042", "item": "SSD CARD KINGSTON 64GB", "quantidade": 6, "quantidadeLabel": "6", "categoria": "Armazenamento", "setor": "Não atribuído", "marca": "Kingston", "observacoes": ""}, {"id": "item-043", "item": "ORANGE PI ONE", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Placas & SBCs", "setor": "Não atribuído", "marca": "Orange Pi", "observacoes": ""}, {"id": "item-044", "item": "ARDUCAM UC-517-REV-D3", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Câmeras & Sensores", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-045", "item": "STM 32F", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Placas & SBCs", "setor": "Não atribuído", "marca": "Stm", "observacoes": ""}, {"id": "item-046", "item": "STM 32 NUCLEO", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Placas & SBCs", "setor": "Não atribuído", "marca": "Stm", "observacoes": ""}, {"id": "item-047", "item": "KIT TINY ML", "quantidade": 9, "quantidadeLabel": "9", "categoria": "Outros & Diversos", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-048", "item": "BALANCE CHARGER", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Energia & Baterias", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-049", "item": "SERVO MOTOR", "quantidade": 2, "quantidadeLabel": "2", "categoria": "Motores & Atuadores", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-050", "item": "BATERIA 25C 1800", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Energia & Baterias", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-051", "item": "ESC", "quantidade": 2, "quantidadeLabel": "2", "categoria": "Outros & Diversos", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-052", "item": "CASE HD EXTERNO", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Armazenamento", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-053", "item": "CASE SSD M2", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Armazenamento", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-054", "item": "SSD NVME M2 500GB", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Armazenamento", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-055", "item": "ADAPTADOR USB-SSD", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Armazenamento", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-056", "item": "HD EXTERNO 2TB SEAGATE", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Armazenamento", "setor": "Não atribuído", "marca": "Seagate", "observacoes": ""}, {"id": "item-057", "item": "ESTANHO VONDER", "quantidade": 4, "quantidadeLabel": "4", "categoria": "Ferramentas & Consumíveis", "setor": "Não atribuído", "marca": "Vonder", "observacoes": ""}, {"id": "item-058", "item": "CABO USB_C - USB_C", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Cabos & Conectores", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-059", "item": "RASP CAM V2", "quantidade": 3, "quantidadeLabel": "3", "categoria": "Câmeras & Sensores", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-060", "item": "RASP CAM V2.1", "quantidade": 2, "quantidadeLabel": "2", "categoria": "Câmeras & Sensores", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-061", "item": "ESP 32-C3-SUPERMINI", "quantidade": 2, "quantidadeLabel": "2", "categoria": "Comunicação & RF", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-062", "item": "HD SEAGATE 1TB", "quantidade": 2, "quantidadeLabel": "2", "categoria": "Armazenamento", "setor": "Não atribuído", "marca": "Seagate", "observacoes": ""}, {"id": "item-063", "item": "SSD SATA 3 240GB", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Armazenamento", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-064", "item": "MULTIMETRO DIGITAL", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Ferramentas & Consumíveis", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-065", "item": "REFLETOR LED 9W ABS", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Ferramentas & Consumíveis", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-066", "item": "ADAPTADOR 4K DP-HDMI", "quantidade": 10, "quantidadeLabel": "10", "categoria": "Cabos & Conectores", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-067", "item": "CABO USB_MICRO", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Cabos & Conectores", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-068", "item": "TERMORETRATIL", "quantidade": 0, "quantidadeLabel": "MUITOS", "categoria": "Ferramentas & Consumíveis", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-069", "item": "GO PRO", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Câmeras & Sensores", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-070", "item": "MIKROE CLICK LR4(4617)", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Módulos MikroE Click", "setor": "Não atribuído", "marca": "Mikroe", "observacoes": ""}, {"id": "item-071", "item": "MIKROE CLICK MICROSD(924)", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Módulos MikroE Click", "setor": "Não atribuído", "marca": "Mikroe", "observacoes": ""}, {"id": "item-072", "item": "MIKROE CLICK RS485(925)", "quantidade": 3, "quantidadeLabel": "3", "categoria": "Módulos MikroE Click", "setor": "Não atribuído", "marca": "Mikroe", "observacoes": ""}, {"id": "item-073", "item": "MIKROE CLICK G2C(3888)", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Módulos MikroE Click", "setor": "Não atribuído", "marca": "Mikroe", "observacoes": ""}, {"id": "item-074", "item": "MIKROE CLICK RTC13(4794)", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Módulos MikroE Click", "setor": "Não atribuído", "marca": "Mikroe", "observacoes": ""}, {"id": "item-075", "item": "MIKROE CLICK BUS(2882)", "quantidade": 4, "quantidadeLabel": "4", "categoria": "Módulos MikroE Click", "setor": "Não atribuído", "marca": "Mikroe", "observacoes": ""}, {"id": "item-076", "item": "MIKROE CLICK SHUTLE(2880)", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Módulos MikroE Click", "setor": "Não atribuído", "marca": "Mikroe", "observacoes": ""}, {"id": "item-077", "item": "MIKROE CLICK WIFI BLE(3542)", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Comunicação & RF", "setor": "Não atribuído", "marca": "Mikroe", "observacoes": ""}, {"id": "item-078", "item": "MIKROE CLICK NANO LORA(4091)", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Comunicação & RF", "setor": "Não atribuído", "marca": "Mikroe", "observacoes": ""}, {"id": "item-079", "item": "MIKROE CLICK CLICKER 2 FOR STM", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Módulos MikroE Click", "setor": "Não atribuído", "marca": "Mikroe", "observacoes": ""}, {"id": "item-080", "item": "MIKROE CLICK LR2", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Módulos MikroE Click", "setor": "Não atribuído", "marca": "Mikroe", "observacoes": ""}, {"id": "item-081", "item": "EXT 8P V1", "quantidade": 2, "quantidadeLabel": "2", "categoria": "Cabos & Conectores", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-082", "item": "EXT 6P V1", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Cabos & Conectores", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-083", "item": "MOTOR A2212/6T", "quantidade": 2, "quantidadeLabel": "2", "categoria": "Motores & Atuadores", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-084", "item": "PUMP 5000RPM", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Motores & Atuadores", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-085", "item": "MOTOR", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Motores & Atuadores", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-086", "item": "SUNSAVER-SOLAR CONTROLLER", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Energia & Baterias", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-087", "item": "RASPBERRY PI 3 MODEL B+", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Placas & SBCs", "setor": "Não atribuído", "marca": "Raspberry Pi", "observacoes": ""}, {"id": "item-088", "item": "FONTE HT-PD27W-HD", "quantidade": 6, "quantidadeLabel": "6", "categoria": "Energia & Baterias", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-089", "item": "LORA-02 SX1278 433MHz", "quantidade": 2, "quantidadeLabel": "2", "categoria": "Comunicação & RF", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-090", "item": "ARDUINO NANO V3", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Placas & SBCs", "setor": "Não atribuído", "marca": "Arduino", "observacoes": ""}, {"id": "item-091", "item": "ADAPTADOR CADDY 12,7MM", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Cabos & Conectores", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-092", "item": "FONTE CHAVEADA AC-DC", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Energia & Baterias", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-093", "item": "SIKAFLEX-591", "quantidade": 1, "quantidadeLabel": "1", "categoria": "Ferramentas & Consumíveis", "setor": "Não atribuído", "marca": "", "observacoes": ""}, {"id": "item-094", "item": "CARREGADOR USB 20W 3A", "quantidade": 11, "quantidadeLabel": "11", "categoria": "Energia & Baterias", "setor": "Não atribuído", "marca": "", "observacoes": ""}];
+
+let state = {
+  items: [],
+  log: [],
+  openCats: {},
+  filterCat: null,
+  filterSetor: null
+};
+
+let editingId = null;
+let menuOpenFor = null;
+let pendingPhoto = null;
+let duplicateMatch = null;
+let forceSeparate = false;
+let dupAction = 'entrada';
+
+function uid(prefix){ return prefix + '-' + Math.random().toString(36).slice(2,9); }
+function nowStr(){
+  const d = new Date();
+  return d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
+}
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(showToast._h);
+  showToast._h = setTimeout(()=>t.classList.remove('show'), 2200);
+}
+function addLog(type, text, itemId){
+  state.log.unshift({ id: uid('log'), type, text, time: nowStr(), itemId: itemId || null });
+  state.log = state.log.slice(0, 200);
+}
+
+function showStorageWarning(){
+  const banner = document.getElementById('storageWarning');
+  if(banner) banner.classList.add('show');
+  document.getElementById('lastSync').textContent = 'salvamento automático indisponível';
+}
+
+async function loadState(){
+  if(typeof window.storage === 'undefined'){
+    showStorageWarning();
+    state.items = SEED_ITEMS;
+    state.log = [{ id: uid('log'), type:'add', text: `Inventário importado da planilha (${SEED_ITEMS.length} itens)`, time: nowStr() }];
+    state.items.forEach(it => { if(!(it.categoria in state.openCats)) state.openCats[it.categoria] = true; });
+    render();
+    return;
+  }
+  try{
+    const res = await window.storage.get(STORAGE_KEY, false);
+    if(res && res.value){
+      const parsed = JSON.parse(res.value);
+      state.items = parsed.items || [];
+      state.log = parsed.log || [];
+    } else {
+      state.items = SEED_ITEMS;
+      state.log = [{ id: uid('log'), type:'add', text: `Inventário importado da planilha (${SEED_ITEMS.length} itens)`, time: nowStr() }];
+      await saveState();
+    }
+  } catch(e){
+    console.error('Erro ao carregar storage, usando dados iniciais', e);
+    showStorageWarning();
+    state.items = SEED_ITEMS;
+  }
+  state.items.forEach(it => { if(!(it.categoria in state.openCats)) state.openCats[it.categoria] = true; });
+  document.getElementById('lastSync').textContent = 'sincronizado ' + nowStr();
+  render();
+}
+
+async function saveState(){
+  if(typeof window.storage === 'undefined'){
+    showStorageWarning();
+    return;
+  }
+  try{
+    await window.storage.set(STORAGE_KEY, JSON.stringify({ items: state.items, log: state.log }), false);
+    document.getElementById('lastSync').textContent = 'sincronizado ' + nowStr();
+  } catch(e){
+    console.error('Erro ao salvar', e);
+    showStorageWarning();
+    showToast('Não foi possível salvar automaticamente — exporte um backup');
+  }
+}
+
+function exportBackup(){
+  const payload = JSON.stringify({ items: state.items, log: state.log, exportedAt: nowStr() }, null, 2);
+  const blob = new Blob([payload], { type:'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `inventario-ecolab-backup-${new Date().toISOString().slice(0,10)}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  showToast('Backup exportado');
+}
+
+function triggerImport(){
+  document.getElementById('importFile').click();
+}
+
+async function handleImportFile(ev){
+  const file = ev.target.files[0];
+  if(!file) return;
+  try{
+    const text = await file.text();
+    const parsed = JSON.parse(text);
+    if(!parsed.items || !Array.isArray(parsed.items)) throw new Error('formato inválido');
+    const ok = confirm(`Importar esse backup vai substituir os ${state.items.length} itens atuais por ${parsed.items.length} itens do arquivo. Continuar?`);
+    if(!ok){ ev.target.value = ''; return; }
+    state.items = parsed.items;
+    state.log = Array.isArray(parsed.log) ? parsed.log : state.log;
+    state.openCats = {};
+    state.items.forEach(it => { if(!(it.categoria in state.openCats)) state.openCats[it.categoria] = true; });
+    addLog('edit', `Backup importado (${parsed.items.length} itens)`);
+    await saveState();
+    render();
+    showToast('Backup importado com sucesso');
+  } catch(e){
+    console.error(e);
+    showToast('Arquivo de backup inválido');
+  }
+  ev.target.value = '';
+}
+
+function categories(){
+  return [...new Set(state.items.map(i=>i.categoria))].sort();
+}
+function setores(){
+  return [...new Set(state.items.map(i=>i.setor))].sort();
+}
+
+function filteredItems(){
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  return state.items.filter(it=>{
+    if(state.filterCat && it.categoria !== state.filterCat) return false;
+    if(state.filterSetor && it.setor !== state.filterSetor) return false;
+    if(q && !(it.item.toLowerCase().includes(q) || (it.marca||'').toLowerCase().includes(q))) return false;
+    return true;
+  });
+}
+
+function renderStats(){
+  const items = state.items;
+  const totalQty = items.reduce((s,i)=> s + (typeof i.quantidade==='number' ? i.quantidade : 0), 0);
+  const el = document.getElementById('stats');
+  el.innerHTML = `
+    <div class="stat"><div class="n">${items.length}</div><div class="l">itens cadastrados</div></div>
+    <div class="stat"><div class="n">${totalQty}</div><div class="l">unidades no total</div></div>
+    <div class="stat"><div class="n">${categories().length}</div><div class="l">categorias</div></div>
+    <div class="stat"><div class="n">${items.filter(i=>i.setor==='Não atribuído').length}</div><div class="l">sem localização definida</div></div>
+  `;
+}
+
+function renderFilters(){
+  const catBox = document.getElementById('catFilters');
+  catBox.innerHTML = categories().map(c=>{
+    const n = state.items.filter(i=>i.categoria===c).length;
+    const active = state.filterCat===c ? 'active' : '';
+    return `<div class="chip ${active}" onclick="toggleCatFilter('${escAttr(c)}')"><span>${esc(c)}</span><span class="count">${n}</span></div>`;
+  }).join('');
+
+  const setorBox = document.getElementById('setorFilters');
+  const sArr = setores();
+  setorBox.innerHTML = sArr.length ? sArr.map(s=>{
+    const n = state.items.filter(i=>i.setor===s).length;
+    const active = state.filterSetor===s ? 'active' : '';
+    return `<div class="chip ${active}" onclick="toggleSetorFilter('${escAttr(s)}')"><span>${esc(s)}</span><span class="count">${n}</span></div>`;
+  }).join('') : `<div style="font-size:12px;color:var(--ink-faint);">nenhuma localização ainda</div>`;
+}
+
+function toggleCatFilter(c){ state.filterCat = (state.filterCat===c) ? null : c; render(); }
+function toggleSetorFilter(s){ state.filterSetor = (state.filterSetor===s) ? null : s; render(); }
+function clearFilters(){ state.filterCat=null; state.filterSetor=null; document.getElementById('search').value=''; render(); }
+
+function setAllOpen(open){
+  categories().forEach(c=> state.openCats[c] = open);
+  render();
+}
+
+function renderList(){
+  const items = filteredItems();
+  const area = document.getElementById('listArea');
+  document.getElementById('countLine').textContent = `${items.length} de ${state.items.length} itens exibidos`;
+
+  if(items.length === 0){
+    area.innerHTML = `<div class="empty"><div class="big">Nada por aqui.</div>Ajuste os filtros ou adicione um novo item ao inventário.</div>`;
+    return;
+  }
+
+  const byCat = {};
+  items.forEach(it=>{ (byCat[it.categoria] = byCat[it.categoria] || []).push(it); });
+
+  const cats = Object.keys(byCat).sort();
+  area.innerHTML = cats.map(cat=>{
+    const list = byCat[cat].sort((a,b)=>a.item.localeCompare(b.item));
+    const open = state.openCats[cat] !== false;
+    const rowsHtml = list.map(it=>{
+      const setorClass = it.setor === 'Não atribuído' ? 'unassigned' : '';
+      return `
+        <div class="row" data-id="${it.id}">
+          <div class="name">${it.foto ? `<img class="thumb" src="${it.foto}">` : `<span class="thumb placeholder"></span>`}<span class="label">${esc(it.item)}</span>${it.marca ? `<span class="marca">${esc(it.marca)}</span>` : ''}</div>
+          <div class="qty mono">${esc(it.quantidadeLabel ?? it.quantidade)}</div>
+          <div class="setor ${setorClass}">${esc(it.setor)}</div>
+          <div class="obs" title="${escAttr(it.observacoes||'')}">${esc(it.observacoes||'—')}</div>
+          <div style="position:relative;">
+            <button class="menu-btn" onclick="toggleMenu(event,'${it.id}')">⋯</button>
+          </div>
+        </div>`;
+    }).join('');
+
+    return `
+      <div class="category-block">
+        <div class="category-head ${open?'open':''}" onclick="toggleCat('${escAttr(cat)}')">
+          <span class="tri">▶</span>
+          <span class="name">${esc(cat)}</span>
+          <span class="n">${list.length} ${list.length===1?'item':'itens'}</span>
+        </div>
+        ${open ? `<div class="rowhead"><div class="th-item">Item</div><div>Qtd.</div><div>Local</div><div>Obs.</div><div></div></div><div class="rows">${rowsHtml}</div>` : ''}
+      </div>`;
+  }).join('');
+}
+
+function toggleCat(cat){ state.openCats[cat] = !(state.openCats[cat] !== false); render(); }
+
+function renderLog(){
+  const area = document.getElementById('logArea');
+  if(state.log.length === 0){ area.innerHTML = `<div style="font-size:12.5px;color:var(--ink-faint);">sem atividade ainda</div>`; return; }
+  area.innerHTML = state.log.slice(0,12).map(l=>`
+    <div class="logline" ${l.itemId ? `style="cursor:pointer;" onclick="openHistory('${l.itemId}')"` : ''}>
+      <span class="t">${esc(l.time)}</span>
+      <span class="tag ${l.type}">${labelForType(l.type)}</span>
+      <span>${esc(l.text)}</span>
+    </div>
+  `).join('');
+}
+function labelForType(t){
+  return { add:'novo', remove:'saída', move:'movido', edit:'editado' }[t] || t;
+}
+
+function render(){
+  renderStats();
+  renderFilters();
+  renderList();
+  renderLog();
+}
+
+/* ---------- row menu ---------- */
+function toggleMenu(ev, id){
+  ev.stopPropagation();
+  closeMenu();
+  const btn = ev.currentTarget;
+  const rect = btn.getBoundingClientRect();
+  const menu = document.createElement('div');
+  menu.className = 'rowmenu';
+  menu.style.top = (rect.bottom + window.scrollY + 4) + 'px';
+  menu.style.left = (rect.right - 140 + window.scrollX) + 'px';
+  menu.innerHTML = `
+    <button onclick="openDrawer('${id}')">Editar</button>
+    <button onclick="promptMove('${id}')">Mover de local</button>
+    <button onclick="openHistory('${id}')">Histórico</button>
+    <button class="danger" onclick="removeItem('${id}')">Remover item</button>
+  `;
+  document.body.appendChild(menu);
+  menuOpenFor = menu;
+  setTimeout(()=> document.addEventListener('click', closeMenu, { once:true }), 0);
+}
+function closeMenu(){ if(menuOpenFor){ menuOpenFor.remove(); menuOpenFor=null; } }
+
+function promptMove(id){
+  closeMenu();
+  const it = state.items.find(i=>i.id===id);
+  if(!it) return;
+  const novo = prompt(`Mover "${it.item}" para qual localização?`, it.setor==='Não atribuído' ? '' : it.setor);
+  if(novo === null) return;
+  const dest = novo.trim() || 'Não atribuído';
+  if(dest === it.setor) return;
+  const origem = it.setor;
+  it.setor = dest;
+  addLog('move', `${it.item}: ${origem} → ${dest}`, it.id);
+  saveState();
+  render();
+  showToast('Item movido');
+}
+
+function removeItem(id){
+  closeMenu();
+  const it = state.items.find(i=>i.id===id);
+  if(!it) return;
+  if(!confirm(`Remover "${it.item}" do inventário? Essa ação não pode ser desfeita.`)) return;
+  state.items = state.items.filter(i=>i.id!==id);
+  addLog('remove', `${it.item} removido do inventário`, id);
+  saveState();
+  render();
+  showToast('Item removido');
+}
+
+/* ---------- histórico por item ---------- */
+function openHistory(id){
+  closeMenu();
+  const it = state.items.find(i=>i.id===id);
+  if(!it) return;
+  editingId = null;
+  const entries = state.log.filter(l=>l.itemId===id);
+  const overlay = document.getElementById('overlay');
+  const drawer = document.getElementById('drawer');
+  drawer.innerHTML = `
+    <h2>Histórico</h2>
+    <div class="drawer-sub">${esc(it.item)}</div>
+    ${entries.length ? entries.map(l=>`
+      <div class="logline" style="padding:10px 0;">
+        <span class="t">${esc(l.time)}</span>
+        <span class="tag ${l.type}">${labelForType(l.type)}</span>
+        <span>${esc(l.text)}</span>
+      </div>
+    `).join('') : `<div style="font-size:13px;color:var(--ink-faint);padding:20px 0;">Nenhum evento registrado para este item ainda.</div>`}
+    <div class="drawer-actions" style="margin-top:20px;">
+      <button class="btn ghost" onclick="closeDrawer()">Fechar</button>
+    </div>
+  `;
+  overlay.classList.add('show');
+}
+
+/* ---------- foto do item ---------- */
+function readAndResizeImage(file){
+  return new Promise((resolve, reject)=>{
+    const reader = new FileReader();
+    reader.onload = (e)=>{
+      const img = new Image();
+      img.onload = ()=>{
+        const maxDim = 160;
+        let w = img.width, h = img.height;
+        if(w > h){ if(w > maxDim){ h = h * (maxDim / w); w = maxDim; } }
+        else { if(h > maxDim){ w = w * (maxDim / h); h = maxDim; } }
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.round(w); canvas.height = Math.round(h);
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL('image/jpeg', 0.6));
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+async function handlePhotoSelect(ev){
+  const file = ev.target.files[0];
+  if(!file) return;
+  try{
+    pendingPhoto = await readAndResizeImage(file);
+    renderPhotoPreview();
+  } catch(e){
+    console.error(e);
+    showToast('Não foi possível carregar essa imagem');
+  }
+}
+function removePendingPhoto(){ pendingPhoto = null; renderPhotoPreview(); const inp = document.getElementById('f-foto'); if(inp) inp.value = ''; }
+function renderPhotoPreview(){
+  const wrap = document.getElementById('photoPreviewWrap');
+  if(!wrap) return;
+  wrap.innerHTML = pendingPhoto
+    ? `<div class="photo-preview"><img src="${pendingPhoto}"><button type="button" class="btn ghost" style="flex:none;padding:6px 10px;font-size:12px;" onclick="removePendingPhoto()">Remover foto</button></div>`
+    : '';
+}
+
+/* ---------- detecção de item duplicado ---------- */
+function findDuplicate(name){
+  const n = name.trim().toLowerCase();
+  if(!n) return null;
+  return state.items.find(i => i.id !== editingId && i.item.trim().toLowerCase() === n) || null;
+}
+function checkDuplicate(){
+  const nameEl = document.getElementById('f-item');
+  const hint = document.getElementById('dupHint');
+  const catEl = document.getElementById('f-categoria');
+  const marcaEl = document.getElementById('f-marca');
+  const catLabel = document.getElementById('f-categoria-label');
+  const marcaLabel = document.getElementById('f-marca-label');
+  if(!nameEl || !hint) return;
+  const match = editingId ? null : findDuplicate(nameEl.value);
+  duplicateMatch = (match && !forceSeparate) ? match : null;
+
+  if(duplicateMatch){
+    catEl.value = duplicateMatch.categoria;
+    catEl.disabled = true;
+    marcaEl.value = duplicateMatch.marca || '';
+    marcaEl.disabled = true;
+    if(catLabel) catLabel.innerHTML = 'Categoria <span class="mirror-tag">espelhado do item existente</span>';
+    if(marcaLabel) marcaLabel.innerHTML = 'Marca <span class="mirror-tag">espelhado do item existente</span>';
+    const qtyText = (typeof duplicateMatch.quantidade === 'number') ? `${duplicateMatch.quantidade} unid.` : (duplicateMatch.quantidadeLabel || '0');
+    const localTxt = (duplicateMatch.setor && duplicateMatch.setor !== 'Não atribuído') ? ` em ${esc(duplicateMatch.setor)}` : '';
+    hint.innerHTML = `<div class="dup-hint">Já existe esse item no estoque${localTxt} — atualmente ${esc(qtyText)}. Categoria e marca foram travadas para seguir o cadastro já existente.
+      <div class="dup-actions">
+        <button type="button" class="dup-action-btn ${dupAction==='entrada'?'active':''}" onclick="setDupAction('entrada')">+ Entrada</button>
+        <button type="button" class="dup-action-btn danger-mode ${dupAction==='saida'?'active':''}" onclick="setDupAction('saida')">− Saída</button>
+        <button type="button" class="dup-action-btn move-mode ${dupAction==='mover'?'active':''}" onclick="setDupAction('mover')">↦ Mover</button>
+      </div>
+      <button type="button" class="linklike" onclick="forceSeparateItem()">Cadastrar como item separado</button>
+    </div>`;
+  } else {
+    catEl.disabled = false;
+    marcaEl.disabled = false;
+    if(catLabel) catLabel.textContent = 'Categoria';
+    if(marcaLabel) marcaLabel.textContent = 'Marca';
+    if(match && forceSeparate){
+      catEl.value = '';
+      marcaEl.value = '';
+      hint.innerHTML = `<div class="dup-hint muted">Será criado como um item separado, mesmo já existindo "${esc(match.item)}" no estoque.</div>`;
+    } else {
+      hint.innerHTML = '';
+    }
+  }
+
+  applyDupActionUI();
+}
+
+function setDupAction(action){
+  dupAction = action;
+  checkDuplicate();
+}
+
+function applyDupActionUI(){
+  const qtdWrap = document.getElementById('qtdFieldWrap');
+  const qtdLabel = document.getElementById('f-qtd-label');
+  const setorWrap = document.getElementById('setorFieldWrap');
+  const setorLabel = document.getElementById('f-setor-label');
+  const btn = document.getElementById('btnSave');
+  if(!qtdWrap || !setorWrap) return;
+
+  if(!duplicateMatch){
+    qtdWrap.style.display = '';
+    setorWrap.style.display = '';
+    if(qtdLabel) qtdLabel.textContent = 'Quantidade';
+    if(setorLabel) setorLabel.textContent = 'Localização';
+    if(btn && !editingId) btn.textContent = 'Adicionar ao inventário';
+    return;
+  }
+
+  if(dupAction === 'saida'){
+    qtdWrap.style.display = '';
+    setorWrap.style.display = 'none';
+    if(qtdLabel) qtdLabel.textContent = 'Quantidade a retirar';
+    if(btn) btn.textContent = 'Registrar saída';
+  } else if(dupAction === 'mover'){
+    qtdWrap.style.display = 'none';
+    setorWrap.style.display = '';
+    if(setorLabel) setorLabel.textContent = 'Nova localização';
+    if(btn) btn.textContent = 'Mover item';
+  } else {
+    qtdWrap.style.display = '';
+    setorWrap.style.display = '';
+    if(qtdLabel) qtdLabel.textContent = 'Quantidade a adicionar';
+    if(setorLabel) setorLabel.textContent = 'Localização';
+    if(btn) btn.textContent = 'Somar ao item existente';
+  }
+}
+function forceSeparateItem(){ forceSeparate = true; checkDuplicate(); }
+
+/* ---------- drawer (add/edit) ---------- */
+function openDrawer(id){
+  editingId = id || null;
+  const it = id ? state.items.find(i=>i.id===id) : null;
+  pendingPhoto = it?.foto || null;
+  duplicateMatch = null;
+  forceSeparate = false;
+  dupAction = 'entrada';
+  const cats = categories();
+  const overlay = document.getElementById('overlay');
+  const drawer = document.getElementById('drawer');
+
+  drawer.innerHTML = `
+    <h2>${it ? 'Editar item' : 'Adicionar item'}</h2>
+    <div class="drawer-sub">${it ? it.id : 'novo registro'}</div>
+
+    <div class="field">
+      <label>Item</label>
+      <input id="f-item" list="item-list" oninput="checkDuplicate()" value="${escAttr(it?.item || '')}" placeholder="ex.: Jetson Orin Nano">
+      <datalist id="item-list">${state.items.filter(i=>i.id!==editingId).map(i=>`<option value="${escAttr(i.item)}">`).join('')}</datalist>
+      <div id="dupHint"></div>
+    </div>
+
+    <div class="field-row">
+      <div class="field" id="qtdFieldWrap">
+        <label id="f-qtd-label">Quantidade</label>
+        <input id="f-qtd" class="mono" value="${escAttr(it?.quantidadeLabel ?? it?.quantidade ?? '1')}" placeholder="ex.: 3">
+        <div class="hint">Aceita número ou texto (ex.: "muitos")</div>
+      </div>
+      <div class="field">
+        <label id="f-marca-label">Marca</label>
+        <input id="f-marca" value="${escAttr(it?.marca || '')}" placeholder="opcional">
+      </div>
+    </div>
+
+    <div class="field">
+      <label id="f-categoria-label">Categoria</label>
+      <input id="f-categoria" list="cat-list" value="${escAttr(it?.categoria || '')}" placeholder="escolha ou crie uma nova">
+      <datalist id="cat-list">${cats.map(c=>`<option value="${escAttr(c)}">`).join('')}</datalist>
+    </div>
+
+    <div class="field" id="setorFieldWrap">
+      <label id="f-setor-label">Localização</label>
+      <input id="f-setor" list="setor-list" value="${escAttr(it?.setor && it.setor!=='Não atribuído' ? it.setor : '')}" placeholder="ex.: Bancada 2, Armário 3, Gaveta B…">
+      <datalist id="setor-list">${setores().filter(s=>s!=='Não atribuído').map(s=>`<option value="${escAttr(s)}">`).join('')}</datalist>
+    </div>
+
+    <div class="field">
+      <label>Foto do item</label>
+      <div id="photoPreviewWrap"></div>
+      <input type="file" id="f-foto" accept="image/*" onchange="handlePhotoSelect(event)">
+      <div class="hint">Opcional — a imagem é redimensionada automaticamente para não pesar no armazenamento.</div>
+    </div>
+
+    <div class="field">
+      <label>Observações</label>
+      <textarea id="f-obs" placeholder="opcional">${esc(it?.observacoes || '')}</textarea>
+    </div>
+
+    <div class="drawer-actions">
+      <button class="btn ghost" onclick="closeDrawer()">Cancelar</button>
+      <button class="btn primary" id="btnSave" onclick="saveItem()">${it ? 'Salvar alterações' : 'Adicionar ao inventário'}</button>
+    </div>
+    ${it ? `<div style="margin-top:10px;"><button class="btn danger" style="width:100%;" onclick="removeItem('${it.id}'); closeDrawer();">Remover este item</button></div>` : ''}
+  `;
+
+  overlay.classList.add('show');
+  renderPhotoPreview();
+  checkDuplicate();
+  setTimeout(()=> document.getElementById('f-item').focus(), 50);
+}
+
+function closeDrawer(){
+  document.getElementById('overlay').classList.remove('show');
+  editingId = null;
+}
+
+function saveItem(){
+  const name = document.getElementById('f-item').value.trim();
+  if(!name){ showToast('Dê um nome ao item antes de salvar'); return; }
+  const qtdRaw = document.getElementById('f-qtd').value.trim();
+  const qtdNum = parseInt(qtdRaw, 10);
+  const marca = document.getElementById('f-marca').value.trim();
+  const categoria = document.getElementById('f-categoria').value.trim() || 'Outros & Diversos';
+  const setor = document.getElementById('f-setor').value.trim() || 'Não atribuído';
+  const obs = document.getElementById('f-obs').value.trim();
+
+  if(!editingId && duplicateMatch){
+    const it = duplicateMatch;
+
+    if(dupAction === 'saida'){
+      if(isNaN(qtdNum) || qtdNum <= 0){ showToast('Informe uma quantidade válida para retirar'); return; }
+      if(typeof it.quantidade !== 'number'){ showToast('Quantidade desse item não é numérica — ajuste manualmente pela edição'); return; }
+      const depois = Math.max(0, it.quantidade - qtdNum);
+      const retirados = it.quantidade - depois;
+      it.quantidade = depois;
+      it.quantidadeLabel = String(depois);
+      addLog('remove', `${it.item}: saída de ${retirados} unid. (estoque: ${depois})`, it.id);
+      showToast('Saída registrada');
+    } else if(dupAction === 'mover'){
+      if(setor === it.setor){ showToast('Escolha uma localização diferente da atual'); return; }
+      const origem = it.setor;
+      it.setor = setor;
+      addLog('move', `${it.item}: ${origem} → ${setor}`, it.id);
+      showToast('Item movido');
+    } else {
+      const before = it.quantidade;
+      let logText;
+      if(typeof before === 'number' && !isNaN(qtdNum)){
+        const depois = before + qtdNum;
+        it.quantidade = depois;
+        it.quantidadeLabel = String(depois);
+        logText = `${it.item}: estoque somado (${before} + ${qtdNum} = ${depois})`;
+      } else {
+        it.quantidadeLabel = `${it.quantidadeLabel || before} + ${qtdRaw || '0'}`;
+        logText = `${it.item}: nova entrada de ${qtdRaw || '0'} registrada (some manualmente — quantidade não numérica)`;
+      }
+      if(setor !== 'Não atribuído' && it.setor === 'Não atribuído') it.setor = setor;
+      addLog('add', logText, it.id);
+      showToast('Quantidade somada ao item existente');
+    }
+
+    if(marca && !it.marca) it.marca = marca;
+    if(pendingPhoto && !it.foto) it.foto = pendingPhoto;
+    if(obs) it.observacoes = it.observacoes ? `${it.observacoes} | ${obs}` : obs;
+    pendingPhoto = null; duplicateMatch = null; forceSeparate = false; dupAction = 'entrada';
+    saveState();
+    closeDrawer();
+    render();
+    return;
+  }
+
+  if(editingId){
+    const it = state.items.find(i=>i.id===editingId);
+    it.item = name;
+    it.quantidade = isNaN(qtdNum) ? 0 : qtdNum;
+    it.quantidadeLabel = qtdRaw || '0';
+    it.marca = marca;
+    it.categoria = categoria;
+    it.setor = setor;
+    it.observacoes = obs;
+    it.foto = pendingPhoto;
+    addLog('edit', `${name} atualizado`, editingId);
+    showToast('Alterações salvas');
+  } else {
+    const newId = uid('item');
+    state.items.push({
+      id: newId,
+      item: name,
+      quantidade: isNaN(qtdNum) ? 0 : qtdNum,
+      quantidadeLabel: qtdRaw || '0',
+      marca, categoria, setor, observacoes: obs, foto: pendingPhoto
+    });
+    state.openCats[categoria] = true;
+    addLog('add', `${name} adicionado (${setor})`, newId);
+    showToast('Item adicionado');
+  }
+  pendingPhoto = null;
+  duplicateMatch = null;
+  forceSeparate = false;
+  dupAction = 'entrada';
+  saveState();
+  closeDrawer();
+  render();
+}
+
+function esc(s){
+  return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function escAttr(s){ return esc(s); }
+
+loadState();
+</script>
+</body>
+</html>
