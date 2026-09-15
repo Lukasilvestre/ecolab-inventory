@@ -8,6 +8,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 :root{--bg:#0A121D;--panel:#101E2E;--panel2:#152840;--line:rgba(173,197,219,.12);--line2:rgba(173,197,219,.24);--ink:#E9EEF3;--dim:#93A8BC;--faint:#5A7086;--copper:#F2A93C;--rust:#E2604B;--ok:#5FC28A;--info:#6FB3E0;--r:6px}*{box-sizing:border-box}html,body{margin:0}body{min-height:100vh;background:repeating-linear-gradient(0deg,rgba(173,197,219,.025) 0 1px,transparent 1px 34px),repeating-linear-gradient(90deg,rgba(173,197,219,.025) 0 1px,transparent 1px 34px),radial-gradient(1000px 500px at 10% -10%,rgba(242,169,60,.07),transparent 60%),var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-serif}.mono{font-family:'JetBrains Mono',monospace}.app{max-width:1360px;margin:auto;padding:28px 24px 80px}.topbar{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--line2);padding-bottom:18px;margin-bottom:22px}.title{display:flex;align-items:center;gap:12px;font-size:29px;font-weight:700}.bar{width:5px;height:28px;background:var(--copper);border-radius:2px;box-shadow:0 0 14px rgba(242,169,60,.5)}.sub{font-size:13px;color:var(--dim);margin-top:5px}.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.btn,.ghost,.add,.mini{font-family:inherit;font-weight:600;border-radius:var(--r);cursor:pointer}.ghost{padding:9px 12px;background:none;border:1px solid var(--line2);color:var(--dim)}.ghost:hover{color:var(--ink);background:var(--panel2)}.add{padding:10px 16px;border:0;background:var(--copper);color:#1A130A}.add:hover{filter:brightness(1.08)}.userbox{display:flex;align-items:center;gap:8px;border:1px solid var(--line2);border-radius:var(--r);padding:7px 10px}.dot{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 9px rgba(95,194,138,.6)}.uname{font-size:11.5px}.urole{font-size:9.5px;color:var(--faint);text-transform:uppercase;letter-spacing:.06em}.sync{display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:11px}.sync:before{content:'';width:7px;height:7px;border-radius:50%;background:var(--faint)}.sync.online:before{background:var(--ok)}.sync.saving:before{background:var(--copper)}.sync.error:before{background:var(--rust)}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line2);border-radius:var(--r);overflow:hidden;margin-bottom:30px}.stat{background:var(--panel);padding:16px 18px}.stat .n{font:600 27px 'JetBrains Mono';color:var(--copper)}.stat .l{font-size:12px;color:var(--dim);margin-top:4px}.main{display:grid;grid-template-columns:230px 1fr;gap:24px;align-items:start}.side{position:sticky;top:16px}.search,input,textarea{width:100%;background:var(--bg);border:1px solid var(--line2);color:var(--ink);padding:9px 10px;border-radius:var(--r);font:13.5px inherit}.search{margin-bottom:18px}.filter{margin-bottom:20px}.filter h3,.log h3{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint)}.chip{display:flex;justify-content:space-between;padding:7px 11px;border-radius:999px;color:var(--dim);font-size:13px;cursor:pointer;border:1px solid transparent;margin-bottom:4px}.chip:hover{background:var(--panel2)}.chip.active{color:var(--copper);border-color:#8C6A32;background:rgba(242,169,60,.1)}.count{font:11px 'JetBrains Mono';color:var(--faint)}.clear{width:100%;padding:7px;background:none;color:var(--dim);border:1px solid var(--line2);border-radius:var(--r);cursor:pointer}.contentHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;color:var(--faint);font-size:12.5px}.category{margin-bottom:8px}.catHead{display:flex;gap:10px;align-items:center;background:var(--panel);border-left:3px solid #8C6A32;border-bottom:1px solid var(--line);padding:10px 12px;cursor:pointer}.catHead:hover{background:var(--panel2);border-left-color:var(--copper)}.tri{font-size:10px;color:#8C6A32}.catHead.open .tri{transform:rotate(90deg)}.catName{font-weight:600}.catN{font:12px 'JetBrains Mono';color:var(--faint)}.rowhead,.row{display:grid;grid-template-columns:1fr 100px 140px 150px 32px;gap:10px;align-items:center}.rowhead{padding:6px 4px 6px 20px;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint)}.row{padding:9px 4px 9px 20px;border-bottom:1px solid var(--line);font-size:13.5px}.row:hover{background:rgba(242,169,60,.04)}.namecell{display:flex;align-items:center;gap:8px;min-width:0}.label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.brand{font-size:11.5px;color:var(--faint)}.qty{font-family:'JetBrains Mono';color:var(--copper)}.loc{font-size:12.5px;color:var(--dim)}.loc.unassigned{color:var(--rust)}.obs{font-size:12px;color:var(--faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.thumb{width:27px;height:27px;border-radius:3px;object-fit:cover;border:1px solid var(--line2);background:var(--panel2);flex:none}.menubtn{background:none;border:0;color:var(--faint);font-size:17px;cursor:pointer}.rowmenu{position:absolute;z-index:80;min-width:155px;background:var(--panel2);border:1px solid var(--line2);border-radius:var(--r);box-shadow:0 8px 24px rgba(0,0,0,.4)}.rowmenu button{display:block;width:100%;text-align:left;border:0;background:none;color:var(--ink);padding:9px 12px;cursor:pointer}.rowmenu button:hover{background:rgba(242,169,60,.08)}.rowmenu .danger{color:var(--rust)}.empty,.loading{text-align:center;padding:50px 20px;color:var(--faint);border:1px dashed var(--line2);border-radius:var(--r)}.log{margin-top:34px}.logline{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--line);font-size:12.5px;color:var(--dim)}.time{font:11px 'JetBrains Mono';color:var(--faint);white-space:nowrap}.tag{font:10.5px 'JetBrains Mono';padding:1px 6px;border-radius:2px}.tag.add{color:var(--ok);background:rgba(95,194,138,.12)}.tag.remove{color:var(--rust);background:rgba(226,96,75,.12)}.tag.move{color:var(--copper);background:rgba(242,169,60,.12)}.tag.edit{color:var(--info);background:rgba(111,179,224,.12)}.overlay{position:fixed;inset:0;z-index:60;background:rgba(5,10,16,.68);backdrop-filter:blur(2px);display:none;justify-content:flex-end}.overlay.show{display:flex}.drawer{width:430px;max-width:94vw;height:100%;overflow:auto;background:var(--panel);border-left:1px solid var(--line2);padding:24px;box-shadow:-16px 0 44px rgba(0,0,0,.45)}.drawer h2{margin:0 0 3px}.drawerSub{font:11px 'JetBrains Mono';color:var(--faint);margin-bottom:20px}.field{margin-bottom:13px}.field label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--dim);margin-bottom:5px}.fieldrow{display:grid;grid-template-columns:1fr 1fr;gap:10px}.hint{font-size:11px;color:var(--faint);margin-top:4px}.drawerActions{display:flex;gap:8px;margin-top:20px}.btn{flex:1;padding:10px;border:0}.btn.primary{background:var(--copper);color:#1A130A}.btn.secondary{background:none;border:1px solid var(--line2);color:var(--dim)}.photoPrev{display:flex;align-items:center;gap:10px;margin-bottom:8px}.photoPrev img{width:65px;height:65px;object-fit:cover;border:1px solid var(--line2);border-radius:4px}.dup{padding:9px 10px;border:1px solid #8C6A32;background:rgba(242,169,60,.07);color:var(--dim);border-radius:var(--r);margin-top:8px;font-size:12px}.dupBtns{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap}.mirrorTag{font:9px 'JetBrains Mono';color:var(--copper);text-transform:none;letter-spacing:0;margin-left:5px}.dupCurrent{margin-top:5px;color:var(--faint);line-height:1.5}.mini{border:1px solid var(--line2);background:var(--panel2);color:var(--dim);padding:6px 8px;font-size:11px}.mini.active{color:var(--copper);border-color:var(--copper)}.mini.danger{color:var(--rust)}.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:100;background:var(--panel2);border:1px solid var(--line2);padding:10px 17px;border-radius:var(--r);opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translate(-50%,-4px)}.readonly{display:none;padding:10px 12px;border:1px solid rgba(95,194,138,.28);background:rgba(95,194,138,.06);color:var(--dim);border-radius:var(--r);margin-bottom:18px;font-size:12.5px}.readonly.show{display:block}.usercard{border:1px solid var(--line);padding:12px;border-radius:var(--r);margin-bottom:9px}.usercardTop{display:flex;justify-content:space-between;gap:12px}.uemail{font-size:11.5px;color:var(--faint);margin-top:3px}.badge{display:inline-block;font:10px 'JetBrains Mono';padding:3px 7px;border:1px solid var(--line2);border-radius:999px;color:var(--dim)}.userBtns{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}.auth{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}.authCard{width:100%;max-width:420px;background:var(--panel);border:1px solid var(--line2);border-top:3px solid var(--copper);border-radius:8px;padding:30px;box-shadow:0 24px 80px rgba(0,0,0,.35)}.authBrand{display:flex;gap:14px;align-items:center;padding-bottom:20px;margin-bottom:22px;border-bottom:1px solid var(--line)}.authBrand h1{font-size:21px;margin:0}.authBrand p{font-size:12px;color:var(--dim);margin:4px 0 0}.authMsg{display:none;padding:9px 11px;border:1px solid #7A3324;background:rgba(226,96,75,.08);color:#F2C4BA;border-radius:var(--r);font-size:12.5px;margin-bottom:15px}.authMsg.show{display:block}.authLink{width:100%;border:0;background:none;color:var(--copper);cursor:pointer;margin-top:15px}.center{text-align:center}.center p{color:var(--dim);line-height:1.6;font-size:13.5px}.authIcon{font-size:32px;margin-bottom:12px}
 @media(max-width:860px){.main{grid-template-columns:1fr}.side{position:static}.stats{grid-template-columns:1fr 1fr}}@media(max-width:700px){.row,.rowhead{grid-template-columns:1fr 65px 95px 32px}.row .obs,.rowhead>div:nth-child(4){display:none}.actions{width:100%}.actions>.ghost,.actions>.add{flex:1}.stats{grid-template-columns:1fr}.fieldrow{grid-template-columns:1fr}}
+
+.webthumb{position:relative;width:27px;height:27px;flex:none}.webthumb .thumb{display:block}.websrc{position:absolute;right:-3px;bottom:-5px;font:7px 'JetBrains Mono';line-height:1;padding:2px 3px;border-radius:2px;background:var(--panel2);border:1px solid var(--line2);color:var(--copper);text-decoration:none}.websrc:hover{border-color:var(--copper)}.photoSource{font-size:10.5px;color:var(--faint);line-height:1.45;margin:-2px 0 9px}.photoSource a{color:var(--copper);text-decoration:none}.photoSource a:hover{text-decoration:underline}.webProgress{height:8px;border-radius:999px;background:var(--bg);border:1px solid var(--line2);overflow:hidden;margin:12px 0}.webProgress>div{height:100%;width:0;background:var(--copper);transition:width .2s}.webResult{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--line);font-size:11.5px;color:var(--dim)}.webResult img{width:34px;height:34px;object-fit:cover;border-radius:3px;border:1px solid var(--line2)}.webOk{color:var(--ok)}.webMiss{color:var(--faint)}
 </style>
 </head>
 <body>
@@ -43,6 +45,7 @@
     <div class="actions">
       <button class="ghost" onclick="exportBackup()">Exportar backup</button>
       <button id="importBtn" class="ghost" style="display:none" onclick="document.getElementById('backupFile').click()">Importar backup antigo</button>
+      <button id="webImagesBtn" class="ghost" style="display:none" onclick="openWebImages()">Imagens web</button>
       <input id="backupFile" type="file" accept="application/json" style="display:none" onchange="importOldBackup(event)">
       <button id="usersBtn" class="ghost" style="display:none" onclick="openUsers()">Usuários</button>
       <div class="userbox"><span class="dot"></span><div><div id="userName" class="uname">—</div><div id="userRole" class="urole">—</div></div></div>
@@ -84,16 +87,234 @@ async function loginUser(){const email=$('loginEmail').value.trim(),password=$('
 async function registerUser(){const name=$('regName').value.trim(),email=$('regEmail').value.trim(),password=$('regPassword').value;if(!name||!email||!password)return authMsg('Preencha todos os campos.');if(password.length<6)return authMsg('A senha deve ter pelo menos 6 caracteres.');const {data,error}=await db.auth.signUp({email,password,options:{data:{name}}});if(error)return authMsg(error.message);if(data.session)await enter(data.user);else showPanel('confirm')}
 async function getProfile(){const {data,error}=await db.from('profiles').select('id,name,email,role,status').eq('id',user.id).single();if(error)throw error;return data}
 async function refreshProfile(){try{profile=await getProfile();await enter(user)}catch(e){authMsg('Não foi possível verificar seu perfil.')}}
-async function enter(u){user=u;try{profile=await getProfile()}catch(e){console.error(e);showPanel('login');return authMsg('Autenticação concluída, mas o perfil não pôde ser carregado.')}if(profile.status==='pending')return showPanel('pending');if(profile.status==='blocked')return showPanel('blocked');$('authScreen').style.display='none';$('inventoryApp').style.display='';$('userName').textContent=profile.name||profile.email;$('userRole').textContent=roleName(profile.role);$('addBtn').style.display=canEdit()?'':'none';$('readonly').classList.toggle('show',!canEdit());$('usersBtn').style.display=isAdmin()?'':'none';$('importBtn').style.display=isAdmin()?'':'none';await loadAll();startRealtime()}
+async function enter(u){user=u;try{profile=await getProfile()}catch(e){console.error(e);showPanel('login');return authMsg('Autenticação concluída, mas o perfil não pôde ser carregado.')}if(profile.status==='pending')return showPanel('pending');if(profile.status==='blocked')return showPanel('blocked');$('authScreen').style.display='none';$('inventoryApp').style.display='';$('userName').textContent=profile.name||profile.email;$('userRole').textContent=roleName(profile.role);$('addBtn').style.display=canEdit()?'':'none';$('readonly').classList.toggle('show',!canEdit());$('usersBtn').style.display=isAdmin()?'':'none';$('importBtn').style.display=isAdmin()?'':'none';$('webImagesBtn').style.display=isAdmin()?'':'none';await loadAll();startRealtime()}
 async function logoutUser(){if(channel)await db.removeChannel(channel);await db.auth.signOut();user=profile=null;state={items:[],moves:[],open:{},cat:null,loc:null};$('inventoryApp').style.display='none';$('authScreen').style.display='flex';showPanel('login')}
 async function init(){const {data:{session}}=await db.auth.getSession();if(session?.user)await enter(session.user);else showPanel('login');db.auth.onAuthStateChange((e)=>{if(e==='SIGNED_OUT'){ $('inventoryApp').style.display='none';$('authScreen').style.display='flex';showPanel('login')}})}
-function norm(r){return{id:r.id,legacy:r.legacy_id,name:r.name,qty:Number(r.quantity||0),qtyLabel:r.quantity_label??String(r.quantity||0),brand:r.brand||'',cat:r.category||'Outros & Diversos',loc:r.location||'Não atribuído',notes:r.notes||'',photoPath:r.photo_path||null,photoUrl:null}}
+function norm(r){return{id:r.id,legacy:r.legacy_id,name:r.name,qty:Number(r.quantity||0),qtyLabel:r.quantity_label??String(r.quantity||0),brand:r.brand||'',cat:r.category||'Outros & Diversos',loc:r.location||'Não atribuído',notes:r.notes||'',photoPath:r.photo_path||null,photoUrl:null,photoWeb:null}}
 function moveTag(t){return({cadastro:'add',entrada:'add',saida:'remove',movimentacao:'move',edicao:'edit',arquivamento:'remove'})[t]||'edit'}
-async function photoUrls(items){await Promise.all(items.map(async i=>{if(!i.photoPath)return;const {data}=await db.storage.from('item-images').createSignedUrl(i.photoPath,3600);if(data)i.photoUrl=data.signedUrl}))}
+
+function isWebPhotoPath(path){return String(path||'').startsWith('web:')}
+function packWebPhoto(meta){return 'web:'+encodeURIComponent(JSON.stringify(meta))}
+function parseWebPhotoPath(path){if(!isWebPhotoPath(path))return null;try{return JSON.parse(decodeURIComponent(String(path).slice(4)))}catch(e){return null}}
+function stripHtml(v){const d=document.createElement('div');d.innerHTML=String(v||'');return(d.textContent||d.innerText||'').replace(/\s+/g,' ').trim()}
+
+const WEB_IMAGE_QUERIES={
+  'raspberry pi 3 model b':['Raspberry Pi 3 Model B'],
+  'raspberry pi 4 model b':['Raspberry Pi 4 Model B'],
+  'raspberry pi 5':['Raspberry Pi 5'],
+  'crachas nvidia':['NVIDIA badge','NVIDIA conference badge'],
+  'jetson orin nano':['NVIDIA Jetson Orin Nano Developer Kit'],
+  'rtx 5070 ti':['GeForce RTX 5070 Ti graphics card'],
+  'caixa red-sus':[],
+  'memoria ram xpg lancer blade ddr5 32 gb':['XPG Lancer Blade DDR5 memory'],
+  'pasta termica z3':['thermal paste syringe'],
+  'cabo vga':['VGA cable'],
+  'fonte 5v':['5V DC power adapter'],
+  'cabo usb - vga':['USB VGA adapter'],
+  'plugue femea':['female DC barrel connector plug'],
+  'cabo de rede':['Ethernet RJ45 cable'],
+  'extensor usb':['USB extension cable'],
+  'fonte xpg 1000w':['XPG 1000W power supply'],
+  'camera wirelles':['wireless security camera'],
+  'rover':['robot rover chassis'],
+  'jetson nano 2gb':['NVIDIA Jetson Nano 2GB Developer Kit'],
+  'fonte 5v bico fino':['5V DC barrel power adapter'],
+  'estacao de solda hikari hk-930':['Hikari HK-930 soldering station'],
+  'frdm-kg4f-dev':['FRDM K64F development board','NXP FRDM-K64F'],
+  'xl 1276-poi':['SX1276 LoRa module'],
+  'conversor dc-dc':['DC DC buck converter module'],
+  'stm 32f411':['STM32F411 development board'],
+  'monocrystaline solar':['monocrystalline solar panel'],
+  'hw-851 dc-dc':['HW-851 DC DC converter'],
+  'bateria lp103454':['LP103454 lithium polymer battery'],
+  'bateria lb2200lp3':['2200mAh LiPo battery'],
+  'arduino nano':['Arduino Nano'],
+  'hw-519 r4':['HW-519 relay module'],
+  'arduino uno':['Arduino Uno'],
+  'arduino mega':['Arduino Mega 2560'],
+  'shield rs485':['Arduino RS485 shield'],
+  'arduino nano 33 sense':['Arduino Nano 33 BLE Sense'],
+  'st link v2':['ST-Link V2 programmer'],
+  'bateria cr202e 3v':['CR2025 coin cell battery'],
+  'bateria cr1220 3v':['CR1220 coin cell battery'],
+  'ssd card sandisk 256gb':['SanDisk 256GB microSD card'],
+  'ssd card sandisk 64gb':['SanDisk 64GB microSD card'],
+  'ssd card sandisk ultra 128gb':['SanDisk Ultra 128GB microSD card'],
+  'ssd card kingston 64gb':['Kingston 64GB microSD card'],
+  'orange pi one':['Orange Pi One'],
+  'arducam uc-517-rev-d3':['Arducam camera module'],
+  'stm 32f':['STM32 development board'],
+  'stm 32 nucleo':['STM32 Nucleo board'],
+  'kit tiny ml':['Arduino Tiny Machine Learning Kit','TinyML kit'],
+  'balance charger':['LiPo balance charger'],
+  'servo motor':['servo motor SG90'],
+  'bateria 25c 1800':['1800mAh 25C LiPo battery'],
+  'esc':['brushless electronic speed controller ESC'],
+  'case hd externo':['external hard drive enclosure'],
+  'case ssd m2':['M.2 SSD enclosure'],
+  'ssd nvme m2 500gb':['M.2 NVMe SSD'],
+  'adaptador usb-ssd':['USB SATA SSD adapter'],
+  'hd externo 2tb seagate':['Seagate external hard drive 2TB'],
+  'estanho vonder':['solder wire spool'],
+  'cabo usb_c - usb_c':['USB-C cable'],
+  'rasp cam v2':['Raspberry Pi Camera Module V2'],
+  'rasp cam v2.1':['Raspberry Pi Camera Module V2'],
+  'esp 32-c3-supermini':['ESP32 C3 SuperMini'],
+  'hd seagate 1tb':['Seagate hard drive 1TB'],
+  'ssd sata 3 240gb':['2.5 inch SATA SSD'],
+  'multimetro digital':['digital multimeter'],
+  'refletor led 9w abs':['LED floodlight'],
+  'adaptador 4k dp-hdmi':['DisplayPort to HDMI adapter'],
+  'cabo usb_micro':['micro USB cable'],
+  'termoretratil':['heat shrink tubing'],
+  'go pro':['GoPro camera'],
+  'mikroe click lr4(4617)':['Mikroe LR 4 Click 4617'],
+  'mikroe click microsd(924)':['Mikroe microSD Click 924'],
+  'mikroe click rs485(925)':['Mikroe RS485 Click 925'],
+  'mikroe click g2c(3888)':['Mikroe G2C Click 3888'],
+  'mikroe click rtc13(4794)':['Mikroe RTC 13 Click 4794'],
+  'mikroe click bus(2882)':['Mikroe BUS Click 2882'],
+  'mikroe click shutle(2880)':['Mikroe Shuttle Click 2880'],
+  'mikroe click wifi ble(3542)':['Mikroe WiFi BLE Click 3542'],
+  'mikroe click nano lora(4091)':['Mikroe Nano LoRa Click 4091'],
+  'mikroe click clicker 2 for stm':['Mikroe Clicker 2 for STM32'],
+  'mikroe click lr2':['Mikroe LR 2 Click'],
+  'ext 8p v1':['8 pin extension cable connector'],
+  'ext 6p v1':['6 pin extension cable connector'],
+  'motor a2212/6t':['A2212 6T brushless motor'],
+  'pump 5000rpm':['small DC water pump'],
+  'motor':['DC electric motor'],
+  'sunsaver-solar controller':['Morningstar SunSaver solar controller'],
+  'raspberry pi 3 model b+':['Raspberry Pi 3 Model B Plus'],
+  'fonte ht-pd27w-hd':['27W USB power adapter'],
+  'lora-02 sx1278 433mhz':['Ra-02 SX1278 LoRa module 433 MHz'],
+  'arduino nano v3':['Arduino Nano V3'],
+  'adaptador caddy 12,7mm':['12.7mm HDD caddy laptop'],
+  'fonte chaveada ac-dc':['AC DC switching power supply'],
+  'sikaflex-591':['Sikaflex 591'],
+  'carregador usb 20w 3a':['USB-C 20W charger']
+};
+
+function webQueryList(item){
+  const key=itemKey(item.name);
+  const curated=WEB_IMAGE_QUERIES[key];
+  if(Array.isArray(curated))return curated;
+  const q=[item.brand,item.name].filter(Boolean).join(' ').trim();
+  return q?[q,item.name]:[];
+}
+function commonsText(page){const ii=page?.imageinfo?.[0],e=ii?.extmetadata||{};return[itemNameFromFile(page?.title||''),stripHtml(e.ObjectName?.value),stripHtml(e.ImageDescription?.value),stripHtml(e.Categories?.value)].join(' ')}
+function itemNameFromFile(v){return String(v||'').replace(/^File:/i,'').replace(/[_-]+/g,' ').replace(/\.[a-z0-9]{2,5}$/i,' ')}
+function tokenSet(v){return new Set(itemKey(v).split(/[^a-z0-9+]+/).filter(x=>x.length>1&&!['the','and','for','with','model','image','photo','board','module'].includes(x)))}
+function candidateScore(page,query,item){
+  const text=itemKey(commonsText(page));
+  const qt=[...tokenSet(query)], it=[...tokenSet(item.name+' '+item.brand)];
+  let s=0;
+  qt.forEach(t=>{if(text.includes(t))s+=3});
+  it.forEach(t=>{if(text.includes(t))s+=2});
+  const bad=['schematic','diagram','pinout','logo','icon','symbol','map','drawing','datasheet'];
+  bad.forEach(t=>{if(text.includes(t))s-=4});
+  const mime=page?.imageinfo?.[0]?.mime||'';
+  if(/^image\/(jpeg|png|webp)$/i.test(mime))s+=2;
+  return s;
+}
+async function searchCommons(query,item){
+  if(!query)return null;
+  const u=new URL('https://commons.wikimedia.org/w/api.php');
+  u.searchParams.set('action','query');
+  u.searchParams.set('generator','search');
+  u.searchParams.set('gsrsearch',query);
+  u.searchParams.set('gsrnamespace','6');
+  u.searchParams.set('gsrlimit','8');
+  u.searchParams.set('prop','imageinfo');
+  u.searchParams.set('iiprop','url|mime|extmetadata');
+  u.searchParams.set('iiurlwidth','480');
+  u.searchParams.set('format','json');
+  u.searchParams.set('origin','*');
+  const r=await fetch(u.toString());
+  if(!r.ok)throw new Error('Wikimedia '+r.status);
+  const j=await r.json();
+  const pages=Object.values(j?.query?.pages||{}).filter(p=>p?.imageinfo?.[0]?.thumburl);
+  if(!pages.length)return null;
+  pages.sort((a,b)=>candidateScore(b,query,item)-candidateScore(a,query,item));
+  const p=pages[0],ii=p.imageinfo[0],e=ii.extmetadata||{};
+  if(candidateScore(p,query,item)<2)return null;
+  return{
+    url:ii.thumburl||ii.url,
+    full:ii.url||ii.thumburl,
+    description:ii.descriptionurl||('https://commons.wikimedia.org/wiki/'+encodeURIComponent(p.title)),
+    title:itemNameFromFile(p.title),
+    artist:stripHtml(e.Artist?.value||e.Credit?.value||''),
+    license:stripHtml(e.LicenseShortName?.value||e.UsageTerms?.value||''),
+    source:'Wikimedia Commons',
+    query
+  };
+}
+async function findWebImage(item){
+  for(const q of webQueryList(item)){
+    try{const m=await searchCommons(q,item);if(m)return m}catch(e){console.warn('Busca Commons falhou',q,e)}
+  }
+  return null;
+}
+async function setItemWebPhoto(item,meta){
+  const {error}=await db.from('items').update({photo_path:packWebPhoto(meta),updated_by:user.id}).eq('id',item.id);
+  if(error)throw error;
+}
+function webAttributionHtml(meta){
+  if(!meta)return'';
+  const bits=[meta.artist,meta.license].filter(Boolean).map(esc).join(' · ');
+  return `<div class="photoSource">Imagem de referência: <a href="${esc(meta.description||meta.full||meta.url)}" target="_blank" rel="noopener">${esc(meta.source||'fonte web')}</a>${bits?' · '+bits:''}</div>`;
+}
+async function openWebImages(){
+  if(!isAdmin())return;
+  const pending=state.items.filter(i=>!i.photoPath);
+  $('drawer').innerHTML=`<h2>Imagens da web</h2><div class="drawerSub">Wikimedia Commons · ${pending.length} itens sem foto</div><p style="color:var(--dim);font-size:12.5px;line-height:1.6">As fotos já existentes não serão alteradas. O sistema procura imagens de referência para cada item e grava apenas as correspondências encontradas. Itens muito genéricos podem permanecer sem imagem.</p><div class="drawerActions"><button class="btn secondary" onclick="closeDrawer()">Cancelar</button><button class="btn primary" onclick="runWebImages()">Buscar e adicionar</button></div>`;
+  $('overlay').classList.add('show');
+}
+async function runWebImages(){
+  if(!isAdmin())return;
+  const pending=state.items.filter(i=>!i.photoPath);
+  if(!pending.length){toast('Todos os itens já possuem imagem');return openWebImages()}
+  $('drawer').innerHTML=`<h2>Imagens da web</h2><div class="drawerSub" id="webStatus">iniciando…</div><div class="webProgress"><div id="webBar"></div></div><div id="webResults"></div><div class="drawerActions"><button class="btn secondary" id="webClose" disabled onclick="closeDrawer()">Fechar</button></div>`;
+  let done=0,found=0,miss=0,errors=0,next=0;
+  const results=$('webResults'),status=$('webStatus'),bar=$('webBar');
+  const update=()=>{status.textContent=`${done}/${pending.length} processados · ${found} imagens adicionadas · ${miss} sem resultado${errors?' · '+errors+' erros':''}`;bar.style.width=(pending.length?done/pending.length*100:100)+'%'};
+  async function worker(){
+    while(true){
+      const idx=next++; if(idx>=pending.length)return;
+      const item=pending[idx];
+      try{
+        const meta=await findWebImage(item);
+        if(meta){
+          await setItemWebPhoto(item,meta);found++;
+          const row=document.createElement('div');row.className='webResult';row.innerHTML=`<img src="${esc(meta.url)}"><span><span class="webOk">✓</span> ${esc(item.name)}<br><span style="color:var(--faint)">${esc(meta.title||meta.query)}</span></span>`;results.prepend(row);
+        }else{miss++;const row=document.createElement('div');row.className='webResult webMiss';row.textContent=`— ${item.name} · sem correspondência segura`;results.prepend(row)}
+      }catch(e){errors++;console.error(e);const row=document.createElement('div');row.className='webResult webMiss';row.textContent=`! ${item.name} · erro na busca`;results.prepend(row)}
+      done++;update();
+      await new Promise(r=>setTimeout(r,140));
+    }
+  }
+  update();
+  await Promise.all([worker(),worker(),worker()]);
+  $('webClose').disabled=false;
+  status.textContent=`Concluído: ${found} imagens adicionadas, ${miss} sem resultado${errors?', '+errors+' erros':''}.`;
+  sync('online','imagens atualizadas');
+  await loadAll();
+}
+async function webImageForCurrent(){
+  const name=$('fName')?.value?.trim(); if(!name)return toast('Informe o item primeiro');
+  const item=editing?state.items.find(i=>i.id===editing):{id:null,name,brand:$('fBrand')?.value||''};
+  toast('Buscando imagem…');
+  const meta=await findWebImage(item);
+  if(!meta)return toast('Nenhuma imagem segura encontrada');
+  if(editing){await setItemWebPhoto(item,meta);currentPhotoPath=packWebPhoto(meta);currentPhotoUrl=meta.url;pendingBlob=null;pendingPreview=null;removePhoto=false;photoPreview();toast('Imagem web adicionada')}
+  else{toast('Salve o item primeiro e use Editar → Buscar imagem na web')}
+}
+
+async function photoUrls(items){await Promise.all(items.map(async i=>{if(!i.photoPath)return;const web=parseWebPhotoPath(i.photoPath);if(web){i.photoWeb=web;i.photoUrl=web.url||web.full;return}const {data}=await db.storage.from('item-images').createSignedUrl(i.photoPath,3600);if(data)i.photoUrl=data.signedUrl}))}
 async function loadAll(){sync('saving','sincronizando…');const [a,b]=await Promise.all([db.from('items').select('*').eq('is_archived',false).order('category').order('name'),db.from('movements').select('id,item_id,type,description,created_at').order('created_at',{ascending:false}).limit(200)]);if(a.error||b.error){console.error(a.error||b.error);sync('error','erro de sincronização');return toast('Falha ao carregar inventário')}state.items=a.data.map(norm);await photoUrls(state.items);state.moves=b.data.map(x=>({id:x.id,itemId:x.item_id,type:moveTag(x.type),text:x.description||x.type,time:new Date(x.created_at).toLocaleString('pt-BR')}));state.items.forEach(i=>{if(!(i.cat in state.open))state.open[i.cat]=true});sync('online','sincronizado '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}));render()}
 function startRealtime(){if(channel)db.removeChannel(channel);channel=db.channel('ecolab-live').on('postgres_changes',{event:'*',schema:'public',table:'items'},scheduleReload).on('postgres_changes',{event:'*',schema:'public',table:'movements'},scheduleReload).subscribe(s=>{if(s==='SUBSCRIBED')sync('online','tempo real ativo')})} function scheduleReload(){clearTimeout(reloadTimer);reloadTimer=setTimeout(loadAll,250)}
 function cats(){return[...new Set(state.items.map(i=>i.cat))].sort()} function locs(){return[...new Set(state.items.map(i=>i.loc))].sort()} function filtered(){const q=$('search').value.trim().toLowerCase();return state.items.filter(i=>(!state.cat||i.cat===state.cat)&&(!state.loc||i.loc===state.loc)&&(!q||i.name.toLowerCase().includes(q)||i.brand.toLowerCase().includes(q)))}
-function render(){const its=filtered();$('stats').innerHTML=`<div class="stat"><div class="n">${state.items.length}</div><div class="l">itens cadastrados</div></div><div class="stat"><div class="n">${state.items.reduce((s,i)=>s+i.qty,0)}</div><div class="l">unidades no total</div></div><div class="stat"><div class="n">${cats().length}</div><div class="l">categorias</div></div><div class="stat"><div class="n">${state.items.filter(i=>i.loc==='Não atribuído').length}</div><div class="l">sem localização definida</div></div>`;$('catFilters').innerHTML=cats().map(c=>`<div class="chip ${state.cat===c?'active':''}" onclick="state.cat=state.cat===${JSON.stringify(c)}?null:${JSON.stringify(c)};render()"><span>${esc(c)}</span><span class="count">${state.items.filter(i=>i.cat===c).length}</span></div>`).join('');$('locFilters').innerHTML=locs().map(l=>`<div class="chip ${state.loc===l?'active':''}" onclick="state.loc=state.loc===${JSON.stringify(l)}?null:${JSON.stringify(l)};render()"><span>${esc(l)}</span><span class="count">${state.items.filter(i=>i.loc===l).length}</span></div>`).join('');$('countLine').textContent=`${its.length} de ${state.items.length} itens exibidos`;const by={};its.forEach(i=>(by[i.cat]=by[i.cat]||[]).push(i));$('list').innerHTML=its.length?Object.keys(by).sort().map(c=>{const open=state.open[c]!==false,rows=by[c].sort((a,b)=>a.name.localeCompare(b.name)).map(i=>`<div class="row"><div class="namecell">${i.photoUrl?`<img class="thumb" src="${i.photoUrl}">`:'<span class="thumb"></span>'}<span class="label">${esc(i.name)}</span>${i.brand?`<span class="brand">${esc(i.brand)}</span>`:''}</div><div class="qty">${esc(i.qtyLabel)}</div><div class="loc ${i.loc==='Não atribuído'?'unassigned':''}">${esc(i.loc)}</div><div class="obs" title="${esc(i.notes)}">${esc(i.notes||'—')}</div><div><button class="menubtn" onclick="rowMenu(event,'${i.id}')">⋯</button></div></div>`).join('');return`<div class="category"><div class="catHead ${open?'open':''}" onclick="state.open[${JSON.stringify(c)}]=!(state.open[${JSON.stringify(c)}]!==false);render()"><span class="tri">▶</span><span class="catName">${esc(c)}</span><span class="catN">${by[c].length} itens</span></div>${open?`<div class="rowhead"><div>Item</div><div>Qtd.</div><div>Local</div><div>Obs.</div><div></div></div>${rows}`:''}</div>`}).join(''):'<div class="empty">Nenhum item encontrado.</div>';$('log').innerHTML=state.moves.length?state.moves.slice(0,16).map(m=>`<div class="logline" ${m.itemId?`onclick="historyItem('${m.itemId}')" style="cursor:pointer"`:''}><span class="time">${esc(m.time)}</span><span class="tag ${m.type}">${m.type}</span><span>${esc(m.text)}</span></div>`).join(''):'<div style="color:var(--faint);font-size:12px">sem atividade ainda</div>'}
+function render(){const its=filtered();$('stats').innerHTML=`<div class="stat"><div class="n">${state.items.length}</div><div class="l">itens cadastrados</div></div><div class="stat"><div class="n">${state.items.reduce((s,i)=>s+i.qty,0)}</div><div class="l">unidades no total</div></div><div class="stat"><div class="n">${cats().length}</div><div class="l">categorias</div></div><div class="stat"><div class="n">${state.items.filter(i=>i.loc==='Não atribuído').length}</div><div class="l">sem localização definida</div></div>`;$('catFilters').innerHTML=cats().map(c=>`<div class="chip ${state.cat===c?'active':''}" onclick="state.cat=state.cat===${JSON.stringify(c)}?null:${JSON.stringify(c)};render()"><span>${esc(c)}</span><span class="count">${state.items.filter(i=>i.cat===c).length}</span></div>`).join('');$('locFilters').innerHTML=locs().map(l=>`<div class="chip ${state.loc===l?'active':''}" onclick="state.loc=state.loc===${JSON.stringify(l)}?null:${JSON.stringify(l)};render()"><span>${esc(l)}</span><span class="count">${state.items.filter(i=>i.loc===l).length}</span></div>`).join('');$('countLine').textContent=`${its.length} de ${state.items.length} itens exibidos`;const by={};its.forEach(i=>(by[i.cat]=by[i.cat]||[]).push(i));$('list').innerHTML=its.length?Object.keys(by).sort().map(c=>{const open=state.open[c]!==false,rows=by[c].sort((a,b)=>a.name.localeCompare(b.name)).map(i=>`<div class="row"><div class="namecell">${i.photoUrl?(i.photoWeb?`<span class="webthumb"><img class="thumb" src="${i.photoUrl}" title="Imagem de referência da web"><a class="websrc" href="${esc(i.photoWeb.description||i.photoWeb.full||i.photoUrl)}" target="_blank" rel="noopener" title="Fonte: ${esc(i.photoWeb.source||'Wikimedia Commons')}">web</a></span>`:`<img class="thumb" src="${i.photoUrl}">`):'<span class="thumb"></span>'}<span class="label">${esc(i.name)}</span>${i.brand?`<span class="brand">${esc(i.brand)}</span>`:''}</div><div class="qty">${esc(i.qtyLabel)}</div><div class="loc ${i.loc==='Não atribuído'?'unassigned':''}">${esc(i.loc)}</div><div class="obs" title="${esc(i.notes)}">${esc(i.notes||'—')}</div><div><button class="menubtn" onclick="rowMenu(event,'${i.id}')">⋯</button></div></div>`).join('');return`<div class="category"><div class="catHead ${open?'open':''}" onclick="state.open[${JSON.stringify(c)}]=!(state.open[${JSON.stringify(c)}]!==false);render()"><span class="tri">▶</span><span class="catName">${esc(c)}</span><span class="catN">${by[c].length} itens</span></div>${open?`<div class="rowhead"><div>Item</div><div>Qtd.</div><div>Local</div><div>Obs.</div><div></div></div>${rows}`:''}</div>`}).join(''):'<div class="empty">Nenhum item encontrado.</div>';$('log').innerHTML=state.moves.length?state.moves.slice(0,16).map(m=>`<div class="logline" ${m.itemId?`onclick="historyItem('${m.itemId}')" style="cursor:pointer"`:''}><span class="time">${esc(m.time)}</span><span class="tag ${m.type}">${m.type}</span><span>${esc(m.text)}</span></div>`).join(''):'<div style="color:var(--faint);font-size:12px">sem atividade ainda</div>'}
 function clearFilters(){state.cat=state.loc=null;$('search').value='';render()} function setAll(v){cats().forEach(c=>state.open[c]=v);render()}
 function rowMenu(e,id){e.stopPropagation();if(menu)menu.remove();const r=e.currentTarget.getBoundingClientRect(),m=document.createElement('div');m.className='rowmenu';m.style.top=(r.bottom+scrollY+4)+'px';m.style.left=(r.right-155+scrollX)+'px';m.innerHTML=`${canEdit()?`<button onclick="openItem('${id}')">Editar</button><button onclick="moveItem('${id}')">Mover</button>`:''}<button onclick="historyItem('${id}')">Histórico</button>${canEdit()?`<button class="danger" onclick="archiveItem('${id}')">Arquivar</button>`:''}`;document.body.appendChild(m);menu=m;setTimeout(()=>document.addEventListener('click',()=>{m.remove();menu=null},{once:true}),0)}
 async function addMove(itemId,type,description,extra={}){const {error}=await db.from('movements').insert({item_id:itemId,user_id:user.id,type,description,...extra});if(error)throw error} function actor(){return profile.name||profile.email||'Usuário'}
@@ -134,7 +355,7 @@ function checkDup(){
   }
   applyDupActionUI();
 }
-function resetPhoto(){if(pendingPreview?.startsWith('blob:'))URL.revokeObjectURL(pendingPreview);pendingBlob=pendingPreview=currentPhotoPath=currentPhotoUrl=null;removePhoto=false} async function resizePhoto(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=e=>{const img=new Image();img.onload=()=>{const max=900,s=Math.min(1,max/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);c.getContext('2d').drawImage(img,0,0,c.width,c.height);c.toBlob(b=>b?res(b):rej(),'image/jpeg',.82)};img.src=e.target.result};r.readAsDataURL(file)})} async function photoSelect(e){if(!e.target.files[0])return;pendingBlob=await resizePhoto(e.target.files[0]);pendingPreview=URL.createObjectURL(pendingBlob);removePhoto=false;photoPreview()} function photoPreview(){const src=pendingPreview||(!removePhoto?currentPhotoUrl:null);$('photoPreview').innerHTML=src?`<div class="photoPrev"><img src="${src}"><button class="mini danger" onclick="removePendingPhoto()">Remover</button></div>`:''} function removePendingPhoto(){pendingBlob=null;if(pendingPreview?.startsWith('blob:'))URL.revokeObjectURL(pendingPreview);pendingPreview=null;removePhoto=!!currentPhotoPath;photoPreview()} async function uploadPhoto(itemId){if(!pendingBlob)return currentPhotoPath;const path=`${itemId}/${Date.now()}.jpg`,{error}=await db.storage.from('item-images').upload(path,pendingBlob,{contentType:'image/jpeg'});if(error)throw error;if(currentPhotoPath)await db.storage.from('item-images').remove([currentPhotoPath]);return path}
+function resetPhoto(){if(pendingPreview?.startsWith('blob:'))URL.revokeObjectURL(pendingPreview);pendingBlob=pendingPreview=currentPhotoPath=currentPhotoUrl=null;removePhoto=false} async function resizePhoto(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=e=>{const img=new Image();img.onload=()=>{const max=900,s=Math.min(1,max/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);c.getContext('2d').drawImage(img,0,0,c.width,c.height);c.toBlob(b=>b?res(b):rej(),'image/jpeg',.82)};img.src=e.target.result};r.readAsDataURL(file)})} async function photoSelect(e){if(!e.target.files[0])return;pendingBlob=await resizePhoto(e.target.files[0]);pendingPreview=URL.createObjectURL(pendingBlob);removePhoto=false;photoPreview()} function photoPreview(){const src=pendingPreview||(!removePhoto?currentPhotoUrl:null),web=!pendingPreview&&!removePhoto?parseWebPhotoPath(currentPhotoPath):null;$('photoPreview').innerHTML=src?`<div class="photoPrev"><img src="${src}"><button class="mini danger" onclick="removePendingPhoto()">Remover</button></div>${webAttributionHtml(web)}`:''} function removePendingPhoto(){pendingBlob=null;if(pendingPreview?.startsWith('blob:'))URL.revokeObjectURL(pendingPreview);pendingPreview=null;removePhoto=!!currentPhotoPath;photoPreview()} async function uploadPhoto(itemId){if(!pendingBlob)return currentPhotoPath;const path=`${itemId}/${Date.now()}.jpg`,{error}=await db.storage.from('item-images').upload(path,pendingBlob,{contentType:'image/jpeg'});if(error)throw error;if(currentPhotoPath&&!isWebPhotoPath(currentPhotoPath))await db.storage.from('item-images').remove([currentPhotoPath]);return path}
 function openItem(id){
   if(!canEdit())return;
   editing=id||null;dup=null;dupMode='entrada';forceSeparate=false;resetPhoto();
@@ -154,7 +375,7 @@ function openItem(id){
     </div>
     <div class="field"><label id="catLabel">Categoria</label><input id="fCat" list="catList" value="${esc(i?.cat||'')}"><datalist id="catList">${catOptions}</datalist></div>
     <div id="locWrap" class="field"><label id="locLabel">Localização</label><input id="fLoc" list="locList" value="${esc(i?.loc==='Não atribuído'?'':i?.loc||'')}"><datalist id="locList">${locOptions}</datalist></div>
-    <div class="field"><label>Foto</label><div id="photoPreview"></div><input type="file" accept="image/*" onchange="photoSelect(event)"></div>
+    <div class="field"><label>Foto</label><div id="photoPreview"></div><input type="file" accept="image/*" onchange="photoSelect(event)"><button type="button" class="mini" style="margin-top:7px" onclick="webImageForCurrent()">Buscar imagem na web</button><div class="hint">Imagens web são referências do Wikimedia Commons e podem ser substituídas por uma foto real do laboratório.</div></div>
     <div class="field"><label>Observações</label><textarea id="fNotes">${esc(i?.notes||'')}</textarea></div>
     <div class="drawerActions"><button class="btn secondary" onclick="closeDrawer()">Cancelar</button><button id="saveBtn" class="btn primary" onclick="saveItem()">${i?'Salvar alterações':'Adicionar ao inventário'}</button></div>`;
   $('overlay').classList.add('show');photoPreview();checkDup();setTimeout(()=>$('fName')?.focus(),50);
@@ -196,7 +417,7 @@ async function saveItem(){
     }
     if(editing){
       const old=state.items.find(x=>x.id===editing);let photo=currentPhotoPath;
-      if(pendingBlob)photo=await uploadPhoto(editing);else if(removePhoto&&currentPhotoPath){await db.storage.from('item-images').remove([currentPhotoPath]);photo=null}
+      if(pendingBlob)photo=await uploadPhoto(editing);else if(removePhoto&&currentPhotoPath){if(!isWebPhotoPath(currentPhotoPath))await db.storage.from('item-images').remove([currentPhotoPath]);photo=null}
       const payload={name,quantity:isNaN(num)?0:num,quantity_label:raw||'0',brand,category:cat,location:loc,notes,photo_path:photo,updated_by:user.id};
       const{error}=await db.from('items').update(payload).eq('id',editing);if(error)throw error;
       await addMove(editing,'edicao',`${actor()} atualizou ${name}`,{previous_quantity:old.qty,new_quantity:payload.quantity,previous_location:old.loc,new_location:loc});
